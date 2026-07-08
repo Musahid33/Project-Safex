@@ -253,17 +253,15 @@
             </div>
 
             <!-- COLLAPSIBLE LOG TABLE -->
-<<<<<<< HEAD
             <div id="reportsLogSection" class="hidden bg-white border border-gray-200 rounded-xl p-3 shadow-inner space-y-2 transition-all">
                 <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-1.5 border-b border-gray-100">
                     <span id="logHeaderType">Type & ID</span> <span id="logHeaderStatus">Status</span>
                 </div>
-                <div class="flex justify-between items-center py-1.5 text-xs">
-                    <div>
-                        <span class="font-bold text-slate-800 block">⚠️ Near Miss</span>
-                        <span class="text-[9px] text-slate-400">ID: #NM-9482 • 05 Jul</span>
+                <div id="reportsLogContent" class="space-y-2">
+                    <!-- Dynamically populated by fetchLoggedReports() -->
+                    <div class="flex justify-between items-center py-1.5 text-xs text-slate-400">
+                        <span>Loading reports...</span>
                     </div>
-                    <span class="bg-red-50 text-red-600 text-[9px] font-black px-2 py-0.5 rounded border border-red-200 uppercase">Open</span>
                 </div>
             </div>
 
