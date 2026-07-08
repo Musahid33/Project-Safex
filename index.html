@@ -252,18 +252,12 @@
                 <i data-lucide="chevron-down" id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-300"></i>
             </div>
 
-            <!-- COLLAPSIBLE LOG TABLE -->
+            <!-- COLLAPSIBLE LOG TABLE (dynamically populated by fetchLoggedReports) -->
             <div id="reportsLogSection" class="hidden bg-white border border-gray-200 rounded-xl p-3 shadow-inner space-y-2 transition-all">
                 <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-1.5 border-b border-gray-100">
                     <span id="logHeaderType">Type & ID</span> <span id="logHeaderStatus">Status</span>
                 </div>
-                <div class="flex justify-between items-center py-1.5 text-xs">
-                    <div>
-                        <span class="font-bold text-slate-800 block">⚠️ Near Miss</span>
-                        <span class="text-[9px] text-slate-400">ID: #NM-9482 • 05 Jul</span>
-                    </div>
-                    <span class="bg-red-50 text-red-600 text-[9px] font-black px-2 py-0.5 rounded border border-red-200 uppercase">Open</span>
-                </div>
+                <p class="text-[10px] text-slate-400 text-center py-3">Click to load reports...</p>
             </div>
 
             <div onclick="openSafetyDashboard()" class="flex items-center justify-between p-4 bg-slate-900 text-white rounded-xl shadow-sm cursor-pointer hover:bg-slate-800 transition">
@@ -2643,8 +2637,14 @@
         function toggleReportsLog() {
             const section = document.getElementById('reportsLogSection');
             const arrow = document.getElementById('arrowIcon');
-            if(section.classList.contains('hidden')) { section.classList.remove('hidden'); arrow.classList.add('rotate-180'); }
-            else { section.classList.add('hidden'); arrow.classList.remove('rotate-180'); }
+            if(section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+                fetchLoggedReports();
+            } else {
+                section.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
         }
         function openPublicSearchModal() { document.getElementById('publicSearchModal').classList.remove('hidden'); document.getElementById('publicResultBox').classList.add('hidden'); }
         function closePublicSearchModal() { document.getElementById('publicSearchModal').classList.add('hidden'); }
