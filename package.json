@@ -1,16 +1,34 @@
 {
-  "name": "project-safex",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "safex-safety-management",
+  "version": "2.0.0",
+  "description": "🛡️ Safex - Mobile-first Safety Management System for Tata Steel industrial safety reporting, incident tracking, and workforce management.",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "test": "node -e \"console.log('✅ Safex module loaded successfully'); require('./db'); require('./backend/api');\"",
+    "check": "node --check app.js && node --check db.js && node --check backend/api.js && echo '✅ All files syntax OK'",
+    "clean": "bash cleanup.sh",
+    "preview": "npx serve ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "safety",
+    "management",
+    "tata-steel",
+    "incident-reporting",
+    "supabase",
+    "industrial-safety"
+  ],
+  "author": "Safexindia.in — EMVEESS INFRAVENTURES PVT.LTD",
+  "license": "UNLICENSED",
+  "private": true,
   "type": "commonjs",
   "dependencies": {
     "@supabase/supabase-js": "^2.110.0"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
