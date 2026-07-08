@@ -1,0 +1,57 @@
+1496:         const supabaseUrl = 'https://duyvrtunxqaawgytkxhv.supabase.co';
+1497:         const supabaseKey = 'sb_publishable_Zlek_bcKAv11vgZMvohs9Q_r0huogOg';
+1498:         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+1503:             const statusSpan = document.getElementById('lookupStatus');
+1504:             const empIdInput = document.getElementById('reportEmpId');
+1505:             const desInput = document.getElementById('reportDesignation');
+1515:                 const { data } = await _supabase.from('employee_profiles').select('*').ilike('full_name', `%${nameValue.trim()}%`);
+1535:             const confirmCall = confirm("🚨 SAFEX EMERGENCY HELPLINE\n\nNumber: +91 9177785011\n\nDo you want to dial this emergency line right now?");
+1566:         let selectedDashboardPlant = '';
+1567:         let dashboardCurrentMonth = 5; // 0=Jan, 5=Jun
+1568:         const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+1571:         const allPlantMonthlyData = {
+1608:             const select = document.getElementById('dashboardPlantSelect');
+1609:             const plant = select.value;
+1616:             const plant = selectedDashboardPlant;
+1617:             const monthIdx = dashboardCurrentMonth;
+1618:             const data = allPlantMonthlyData[plant][monthIdx];
+1619:             const plantNames = {
+1674:             const startMonth = Math.max(0, activeMonth - 2);
+1675:             const months = [];
+1676:             for (let i = 0; i < 6; i++) {
+1677:                 const m = startMonth + i;
+1681:             const chartContainer = document.getElementById('chartBarsContainer');
+1682:             const chartLabels = document.getElementById('chartLabelsContainer');
+1685:             let barsHtml = '';
+1686:             let labelsHtml = '';
+1689:                 const d = allPlantMonthlyData[selectedDashboardPlant][m];
+1690:                 const total = d.nearMiss + d.lti + d.fac + d.fatal + d.uc + d.ua;
+1691:                 const safeTotal = d.lineWalk + d.audits + d.training + d.reward + d.events;
+1692:                 const height = Math.max(8, Math.min(80, total * 4));
+1693:                 const safeHeight = Math.max(8, Math.min(80, safeTotal * 1.5));
+1694:                 const isActive = (m === activeMonth);
+1716:             const plantNames = {
+1724:             const plantData = {
+1729:             const data = plantData[plant] || plantData['TSL-Kalinganagar'];
+1753:         const safetyAlertsData = {
+1788:             const categoryNames = {
+1794:             const data = safetyAlertsData[category];
+1800:             const titleEl = document.getElementById('alertDetailTitle');
+1803:             const listContainer = document.getElementById('alertIncidentList');
+1804:             let html = '';
+1808:                     const severityColor = item.severity === 'FATAL' ? 'bg-red-100 text-red-700 border-red-200' : 
+1810:                     const statusColor = item.status.includes('Closed') ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700';
+1826:                     const severityColor = item.severity === 'FATAL' ? 'bg-red-100 text-red-700 border-red-200' : 'bg-amber-100 text-amber-700 border-amber-200';
+1841:                     const typeColors = {
+1848:                     const typeColor = typeColors[item.type] || 'bg-slate-100 text-slate-700';
+1872:         let currentLang = 'EN';
+2092:             const section = document.getElementById('reportsLogSection');
+2093:             const arrow = document.getElementById('arrowIcon');
+2100:             const selectedPlant = document.getElementById('publicSearchPlant').value;
+2101:             const searchId = document.getElementById('publicSearchEmpId').value.trim().toUpperCase();
+2102:             const resultBox = document.getElementById('publicResultBox');
+2106:                 const { data } = await _supabase.from('employee_profiles').select('*').eq('employee_id', searchId);
+2119:             const plant = document.getElementById('officerPlant').value;
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {

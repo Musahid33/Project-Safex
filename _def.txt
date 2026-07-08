@@ -1,0 +1,21 @@
+First ref line: 2122
+2103:             if(!searchId) return;
+2104:             resultBox.classList.remove('hidden');
+2105:             try {
+2106:                 const { data } = await _supabase.from('employee_profiles').select('*').eq('employee_id', searchId);
+2107:                 if(data && data[0] && data[0].active_plant_id === selectedPlant) {
+2108:                     resultBox.className = "rounded-xl p-3 bg-emerald-50 border border-emerald-200 text-slate-700 text-left space-y-1";
+2109:                     resultBox.innerHTML = `✅ <strong>${data[0].full_name}</strong><br>Blood Group: ${data[0].blood_group}<br>Medical Status: ${data[0].medical_fitness_status}`;
+2110:                 } else {
+2111:                     resultBox.className = "rounded-xl p-3 bg-rose-50 border border-rose-200 text-rose-700 text-left";
+2112:                     resultBox.innerHTML = `🛑 Access Lock: Verification Mis-match.`;
+2113:                 }
+2114:             } catch(e) { alert(e.message); }
+2115:         }
+2116:         function openOfficerModal() { document.getElementById('officerModal').classList.remove('hidden'); if(!currentAuthenticatedPlant) logoutOfficer(); }
+2117:         function closeOfficerModal() { document.getElementById('officerModal').classList.add('hidden'); }
+2118:         function validateOfficerLogin() {
+2119:             const plant = document.getElementById('officerPlant').value;
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {

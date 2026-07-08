@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safex - EMVEESS INFRAVENTURES PVT.LTD</title>
+    <!-- 🔒 Content Security Policy: blocks inline eval, restricts sources -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' https: data:; connect-src 'self' https://duyvrtunxqaawgytkxhv.supabase.co https://*.supabase.co; font-src 'self' https: data:;">
+    <!-- Tailwind CSS For Modern Designing -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Lucide Icons for Clean Look -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS Client Module Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .custom-scroll::-webkit-scrollbar { display: none; }
+        @keyframes pulse-red {
+            0%, 100% { background-color: #ef4444; }
+            50% { background-color: #991b1b; }
+        }
+        .emergency-blink { animation: pulse-red 2s infinite; }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .gallery-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .gallery-scroll-inner {
+            display: flex;
+            gap: 1rem;
+            animation: scroll-left 30s linear infinite;
+        }
+        .gallery-scroll-inner:hover {
+            animation-play-state: paused;
+        }
+        .gallery-card {
+            min-width: 200px;
+            flex-shrink: 0;
+        }
+
+        /* ===== THEME SYSTEM ===== */
+        :root {
+            --theme-bg: #f8fafc;
+            --theme-surface: #ffffff;
+            --theme-border: #e2e8f0;
+            --theme-text: #1e293b;
+            --theme-text-secondary: #64748b;
+            --theme-header-bg: #0f172a;
+            --theme-header-text: #ffffff;
+            --theme-footer-bg: #0f172a;
+            --theme-footer-text: #94a3b8;
+            --theme-card-bg: #ffffff;
+            --theme-accent: #10b981;
+            --theme-accent-hover: #059669;
+            --theme-muted: #f1f5f9;
+            --theme-shadow: rgba(0,0,0,0.08);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* 🌙 DARK MODE */
+        body.theme-dark {
+            --theme-bg: #0f172a;
+            --theme-surface: #1e293b;
+            --theme-border: #334155;
+            --theme-text: #f1f5f9;
+            --theme-text-secondary: #94a3b8;
+            --theme-header-bg: #020617;
+            --theme-header-text: #f1f5f9;
+            --theme-footer-bg: #020617;
+            --theme-footer-text: #64748b;
+            --theme-card-bg: #1e293b;
+            --theme-accent: #34d399;
+            --theme-accent-hover: #10b981;
+            --theme-muted: #1e293b;
+            --theme-shadow: rgba(0,0,0,0.3);
+        }
+
+        /* 💎 PREMIUM THEME (Royal Gold & Deep Indigo) */
+        body.theme-premium {
+            --theme-bg: #0f0a1a;
+            --theme-surface: #1a1230;
+            --theme-border: #3d2e6b;
+            --theme-text: #f0e6ff;
+            --theme-text-secondary: #b8a3e6;
+            --theme-header-bg: #0d0820;
+            --theme-header-text: #f0e6ff;
+            --theme-footer-bg: #0d0820;
+            --theme-footer-text: #8b7ab5;
+            --theme-card-bg: #1e1540;
+            --theme-accent: #f59e0b;
+            --theme-accent-hover: #d97706;
+            --theme-muted: #1e1540;
+            --theme-shadow: rgba(245,158,11,0.15);
+        }
+
+        /* Apply theme variables to body and common elements */
+        body { background-color: var(--theme-bg); color: var(--theme-text); }
+        body.theme-dark, body.theme-premium { background-color: var(--theme-bg); color: var(--theme-text); }
+        .theme-surface { background-color: var(--theme-surface); }
+        .theme-border { border-color: var(--theme-border); }
+        .theme-card { background-color: var(--theme-card-bg); border-color: var(--theme-border); }
+        .theme-muted { background-color: var(--theme-muted); }
+        .theme-text-secondary { color: var(--theme-text-secondary); }
+        .theme-accent { color: var(--theme-accent); }
+        .theme-accent-bg { background-color: var(--theme-accent); }
+        .theme-shadow { box-shadow: 0 1px 3px var(--theme-shadow); }
+
+        /* Theme toggle button animation */
+        .theme-btn-rotate {
+            animation: spin-theme 0.5s ease-in-out;
+        }
+        @keyframes spin-theme {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased max-w-md mx-auto min-h-screen shadow-2xl border-x border-gray-200 flex flex-col relative">
+
+    <!-- HEADER SECTION -->
+    <header class="bg-slate-900 text-white sticky top-0 z-40 px-4 py-3 shadow-md">
+        <div class="flex items-center justify-between mb-2">
+            <div>
+                <h1 class="text-sm font-extrabold tracking-tight whitespace-nowrap" id="companyName">EMVEESS INFRAVENTURES PVT.LTD</h1>
+                <p class="text-[10px] text-slate-400 font-medium">Vendor Partner | Tata Steel Ltd</p>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <!-- 📅 TODAY'S DATE -->
+                <span id="todayDateDisplay" class="flex items-center gap-1 bg-slate-800 text-xs px-2 py-1.5 rounded-lg border border-slate-700 text-slate-300 font-medium whitespace-nowrap">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span id="dateText">Loading...</span>
+                </span>
+                <!-- 🌐 LANGUAGE TOGGLE BUTTON -->
+                <button onclick="toggleLanguage()" class="flex items-center gap-1 bg-slate-800 text-xs px-2 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700 transition">
+                    <i data-lucide="globe" class="w-4 h-4 text-emerald-400"></i>
+                    <span id="langBtn">A/अ</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Login Quick Actions -->
+        <div class="grid grid-cols-3 gap-2 mt-2 pt-2 border-t border-slate-800">
+            <a href="https://musahid33.github.io/emveess-safety-portal/" target="_blank" class="flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold py-2 px-1 rounded-md transition shadow-sm" id="btnPublicSearch">
+                <i data-lucide="search" class="w-3.5 h-3.5"></i> Employee Search
+            </a>
+            <button onclick="openOfficerModal()" class="flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-bold py-2 px-1 rounded-md border border-slate-700 transition shadow-sm" id="btnOfficerSearch">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i> Officer Login
+            </button>
+            <a href="https://script.google.com/macros/s/AKfycbyKpFHGJlliJyzuDfYHn3eDaDyD12mfdviUQa44fpAd9JgyzQ5I2st65Rj-7XLrlqf9/exec" target="_blank" class="flex items-center justify-center gap-1.5 bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-bold py-2 px-1 rounded-md transition shadow-sm" id="btnDmConduct">
+                <i data-lucide="clipboard-list" class="w-3.5 h-3.5"></i> Conduct DM
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="p-4 flex-1 space-y-5 custom-scroll overflow-y-auto bg-slate-50">
+
+        <!-- 🎯 INCIDENT-FREE DAYS COUNTER -->
+        <div class="bg-white border border-gray-200 rounded-xl p-3.5 shadow-sm flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-200 flex flex-col items-center justify-center text-emerald-600 shadow-inner">
+                    <span class="text-lg font-black leading-none">184</span>
+                    <span class="text-[7px] font-black uppercase tracking-wider text-emerald-700" id="daysLabel">Days</span>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide" id="incidentDaysTitle">Incident Free Days</h4>
+                    <p class="text-[11px] text-slate-600 font-medium italic mt-0.5" id="safetyQuote">"सुरक्षा से समझौता, दुर्घटना को न्योता। Always wear your PPE!"</p>
+                </div>
+            </div>
+            <i data-lucide="shield" class="w-5 h-5 text-emerald-500 shrink-0"></i>
+        </div>
+
+        <!-- 🚨 CRITICAL CONTROLS (EMERGENCY DIRECT DIAL) -->
+        <div class="grid grid-cols-2 gap-3">
+            <div onclick="openEmergencyModal()" class="emergency-blink text-white p-3.5 rounded-xl shadow-lg cursor-pointer transform active:scale-95 transition flex flex-col justify-between min-h-[90px]">
+                <div class="flex justify-between items-start">
+                    <i data-lucide="phone-call" class="w-6 h-6"></i>
+                    <span class="bg-white/20 text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">SOS</span>
+                </div>
+                <div>
+                    <h3 class="font-black text-sm tracking-wide" id="emergencyTitle">EMERGENCY NO</h3>
+                    <p class="text-[10px] text-red-100 opacity-90" id="emergencySub">Click to Dial</p>
+                </div>
+            </div>
+
+            <div onclick="openTslRules()" class="bg-gradient-to-br from-blue-700 to-indigo-900 text-white p-3.5 rounded-xl shadow-lg cursor-pointer transform active:scale-95 transition flex flex-col justify-between min-h-[90px]">
+                <div class="flex justify-between items-start">
+                    <i data-lucide="award" class="w-6 h-6 text-amber-400"></i>
+                    <span class="bg-blue-600 text-[10px] px-1.5 py-0.5 rounded-full font-bold">TSL</span>
+                </div>
+                <div>
+                    <h3 class="font-black text-sm tracking-wide" id="tslRulesTitle">LIFE SAVING RULES</h3>
+                    <p class="text-[10px] text-blue-100 opacity-90" id="tslRulesSub">10 Absolute Mandates</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📝 LOG SAFETY & GRIEVANCES GRID -->
+        <div>
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" id="sectionReporting">Log Safety & Grievances</h2>
+            <div class="grid grid-cols-2 gap-2.5">
+                <button onclick="openReportingForm('Near Miss')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-amber-50 rounded-lg text-amber-600 mb-1.5"><i data-lucide="alert-triangle" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblNearMiss">Near Miss</span>
+                </button>
+                <button onclick="openReportingForm('Hazard')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-red-50 rounded-lg text-red-600 mb-1.5"><i data-lucide="flame" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblHazard">Hazard</span>
+                </button>
+                <button onclick="openObservationSelectModal()" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600 mb-1.5"><i data-lucide="eye" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblObservation">Safety Observation</span>
+                </button>
+                <button onclick="openFeedbackSelectModal()" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600 mb-1.5"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblFeedback">Feedback</span>
+                </button>
+                <button onclick="openGrievanceSelectModal()" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95 col-span-2">
+                    <div class="p-2 bg-purple-50 rounded-lg text-purple-600 mb-1.5"><i data-lucide="frown" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblGrievances">Grievances</span>
+                </button>
+            </div>
+            <!-- SPEAK UP & SUGGESTION - EXPANDED ROW -->
+            <div class="grid grid-cols-2 gap-2.5 mt-2.5">
+                <button onclick="openReportingForm('Speak Up')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600 mb-1.5"><i data-lucide="megaphone" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblSpeakUp">Speak Up</span>
+                </button>
+                <button onclick="openSuggestionSelectModal()" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-sky-50 rounded-lg text-sky-600 mb-1.5"><i data-lucide="lightbulb" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblSuggestion">Suggestion</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 🔗 PORTALS & HUBS -->
+        <div class="space-y-2.5">
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1" id="sectionHub">Portals & Hubs</h2>
+            
+            <div onclick="toggleReportsLog()" class="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl shadow-md cursor-pointer hover:opacity-95 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-white/10 rounded-lg"><i data-lucide="folder-search" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-black tracking-wide" id="btnViewReports">View Logged Reports</h4>
+                        <p class="text-[10px] text-emerald-100 opacity-90" id="subViewReports">Track Open/Closed Statuses</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-down" id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-300"></i>
+            </div>
+
+            <!-- COLLAPSIBLE LOG TABLE (dynamically populated by fetchLoggedReports) -->
+            <div id="reportsLogSection" class="hidden bg-white border border-gray-200 rounded-xl p-3 shadow-inner space-y-2 transition-all">
+                <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-1.5 border-b border-gray-100">
+                    <span id="logHeaderType">Type & ID</span> <span id="logHeaderStatus">Status</span>
+                </div>
+                <p class="text-[10px] text-slate-400 text-center py-3">Click to load reports...</p>
+            </div>
+
+            <div onclick="openSafetyDashboard()" class="flex items-center justify-between p-4 bg-slate-900 text-white rounded-xl shadow-sm cursor-pointer hover:bg-slate-800 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-slate-800 rounded-lg text-emerald-400"><i data-lucide="layout-dashboard" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold" id="lblDashboard">View Safety Dashboard</h4>
+                        <p class="text-[10px] text-slate-400" id="subDashboard">Live Metric Charts & Analysis</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i>
+            </div>
+
+            <div onclick="openTrainingManagement()" class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800" id="lblTraining">Training Management</h4>
+                        <p class="text-[10px] text-slate-500" id="subTraining">Modules, Videos & Progress</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i>
+            </div>
+
+            <div onclick="openSafetyAlertsModal()" class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-rose-50 rounded-lg text-rose-600"><i data-lucide="bell" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800" id="lblAlerts">Safety Alerts</h4>
+                        <p class="text-[10px] text-slate-500" id="subAlerts">Recent Plant-Wide Broadcasts</p>
+                    </div>
+                </div>
+                <span class="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">3 NEW</span>
+            </div>
+        </div>
+
+        <!-- 📅 UPCOMING EVENTS SECTION -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
+                <i data-lucide="calendar-days" class="w-5 h-5 text-indigo-600"></i>
+                <h3 class="font-extrabold text-sm text-slate-800" id="eventsTitle">Upcoming Safety Events</h3>
+            </div>
+            <div class="space-y-2.5">
+                <div class="flex items-start gap-3 p-2 rounded-lg bg-indigo-50/50 border border-indigo-100">
+                    <div class="bg-indigo-600 text-white text-center rounded px-2 py-1 font-black text-xs shrink-0">
+                        10 <span class="block text-[8px] font-medium uppercase">Jul</span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-800" id="eventMockDrillTitle">Confined Space Mock Drill</h4>
+                        <p class="text-[10px] text-slate-500" id="eventMockDrillSub">Time: 10:30 AM • Site-4 Blast Furnace Area</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📢 CIRCULARS & NOTICES SECTION -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="megaphone" class="w-5 h-5 text-rose-500"></i>
+                    <h3 class="font-extrabold text-sm text-slate-800" id="noticesTitle">Circulars & Notices</h3>
+                </div>
+                <span class="bg-rose-100 text-rose-700 text-[9px] font-black px-1.5 py-0.5 rounded" id="liveBoardBadge">LIVE BOARD</span>
+            </div>
+            <div class="space-y-3">
+                <div onclick="alert('Independence Day Notice')" class="p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl cursor-pointer hover:bg-amber-50 transition">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[9px] bg-amber-200 text-amber-800 font-black px-1.5 py-0.5 rounded uppercase" id="badgeHoliday">Holiday</span>
+                        <span class="text-[9px] text-slate-400 font-medium" id="timeToday">Today</span>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 leading-tight" id="noticeHolidayTitle">Independence Day Holiday Notice</h4>
+                    <p class="text-[10px] text-slate-500 mt-0.5 line-clamp-1" id="noticeHolidaySub">Shift C operations will remain closed...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📚 DOCUMENT VAULT / COMPREHENSIVE LIBRARY -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
+                <i data-lucide="folder-open" class="w-5 h-5 text-slate-700"></i>
+                <h3 class="font-extrabold text-sm text-slate-800" id="libraryTitle">Document Vault / Library</h3>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <!-- 📋 SOP -->
+                <div onclick="alert('📋 SOP Standard Operating Procedures\\n\\nFile: SOP_Master_Document.pdf\\nVersion: 4.2\\nPages: 156\\n\\n✅ Access granted')" class="flex items-center gap-2 p-2.5 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 cursor-pointer transition text-xs font-bold text-red-700" id="vaultSop">
+                    <i data-lucide="file-text" class="w-4 h-4 shrink-0"></i> <span id="vaultSopText">SOP</span>
+                </div>
+                <!-- 🎯 JHA -->
+                <div onclick="alert('🎯 Job Hazard Analysis\\n\\nFile: JHA_Folders.xlsx\\nModules: 12\\nWorkstations: 34\\n\\n✅ Access granted')" class="flex items-center gap-2 p-2.5 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 cursor-pointer transition text-xs font-bold text-blue-700" id="vaultJha">
+                    <i data-lucide="shield-alert" class="w-4 h-4 shrink-0"></i> <span id="vaultJhaText">JHA</span>
+                </div>
+                <!-- ⚠️ RCRM/HIRA -->
+                <div onclick="alert('⚠️ Risk Control & Risk Management (HIRA)\\n\\nFile: RCRM_HIRA_Assessment.pdf\\nRisks Identified: 47\\nControls Implemented: 42\\n\\n✅ Access granted')" class="flex items-center gap-2 p-2.5 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 cursor-pointer transition text-xs font-bold text-orange-700" id="vaultRcrm">
+                    <i data-lucide="alert-octagon" class="w-4 h-4 shrink-0"></i> <span id="vaultRcrmText">RCRM/HIRA</span>
+                </div>
+                <!-- 🧪 MSDS -->
+                <div onclick="alert('🧪 Material Safety Data Sheets\\n\\nFile: MSDS_Master_Library.zip\\nChemicals: 28\\nDocuments: 156\\n\\n✅ Access granted')" class="flex items-center gap-2 p-2.5 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 cursor-pointer transition text-xs font-bold text-purple-700" id="vaultMsds">
+                    <i data-lucide="flask" class="w-4 h-4 shrink-0"></i> <span id="vaultMsdsText">MSDS</span>
+                </div>
+                <!-- 🎓 TPI Certificates -->
+                <div onclick="alert('🎓 Third Party Inspector Certificates\\n\\nFile: TPI_Certificates.pdf\\nCertifications: 8\\nExpiry: 12 Dec 2026\\n\\n✅ Access granted')" class="flex items-center gap-2 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 cursor-pointer transition text-xs font-bold text-emerald-700" id="vaultTpi">
+                    <i data-lucide="award" class="w-4 h-4 shrink-0"></i> <span id="vaultTpiText">TPI Certs</span>
+                </div>
+                <!-- 🚨 Emergency Preparedness -->
+                <div onclick="openEmergencyPrepModal()" class="flex items-center gap-2 p-2.5 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 cursor-pointer transition text-xs font-bold text-rose-700" id="vaultEmergency">
+                    <i data-lucide="bell-alert" class="w-4 h-4 shrink-0"></i> <span id="vaultEmergencyText">Emergency Preparedness</span>
+                </div>
+                <!-- 📜 All Policy (expanded sub-list) -->
+                <div onclick="openAllPolicyModal()" class="flex items-center gap-2 p-2.5 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 cursor-pointer transition text-xs font-bold text-indigo-700" id="vaultPolicies">
+                    <i data-lucide="scroll" class="w-4 h-4 shrink-0"></i> <span id="vaultPoliciesText">All Policy</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 🏆 WALL OF FAME SECTION -->
+        <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 rounded-xl p-4 text-white shadow-md relative overflow-hidden">
+            <div class="absolute right-0 bottom-0 opacity-10 translate-x-4 translate-y-4"><i data-lucide="crown" class="w-32 h-32"></i></div>
+            <div class="flex items-center gap-1 mb-1.5">
+                <i data-lucide="crown" class="w-4 h-4 text-yellow-200 fill-yellow-200"></i>
+                <h3 class="text-xs font-black uppercase tracking-widest text-yellow-100" id="fameTitle">WALL OF FAME</h3>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-full bg-white/20 border-2 border-white flex items-center justify-center overflow-hidden font-black text-lg shadow-inner">👷‍♂️</div>
+                <div>
+                    <h4 class="font-extrabold text-base leading-tight">Rajesh Kumar</h4>
+                    <p class="text-[10px] text-yellow-100 font-medium" id="fameSub">Fabrication Team — Jamshedpur</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📸 EVENT GALLERY SECTION - AI Generated Photos Horizontal Auto-Scroll -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm overflow-hidden">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
+                <i data-lucide="images" class="w-5 h-5 text-purple-600"></i>
+                <h3 class="font-extrabold text-sm text-slate-800" id="galleryTitle">📸 Event Gallery</h3>
+                <span class="text-[8px] text-slate-400 font-medium ml-auto bg-purple-50 px-2 py-0.5 rounded-full" id="gallerySub">Scrolling</span>
+            </div>
+            <div class="gallery-scroll">
+                <div class="gallery-scroll-inner">
+                    <!-- Card 1 - Safety Drill -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Safety Drill - June 2026\n\nConfined Space Rescue Mock Drill\nParticipants: 24 workers\nLocation: Site-4 Blast Furnace\nConducted by: TSL Safety Team')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/safetydrill1/320/180" alt="Safety Drill" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🚒 Safety Drill</h5>
+                                <p class="text-[8px] text-gray-300">Jun 2026 • 24 Participants</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 - Safety Awards -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Safety Awards - May 2026\n\nMonthly Safety Excellence Awards\nAwardees: 12 Workers\nVenue: Main Auditorium\nChief Guest: Plant Head')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/safetyawards1/320/180" alt="Safety Awards" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🏆 Safety Awards</h5>
+                                <p class="text-[8px] text-gray-300">May 2026 • 12 Awardees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 - Training Session -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Training Session - Apr 2026\n\nPPE Usage & Care Workshop\nAttendees: 45 workers\nDuration: 2 Hours\nTrainer: Mr. Sharma (Safety Officer)')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/trainingsession1/320/180" alt="Training Session" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">📚 Training Session</h5>
+                                <p class="text-[8px] text-gray-300">Apr 2026 • 45 Attendees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 - Fire Mock Drill -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Fire Mock Drill - Mar 2026\n\nAnnual Fire Evacuation Drill\nParticipants: 120 workers\nEvacuation Time: 4 min 32 sec\nAssessment: Excellent')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/firedrill1/320/180" alt="Fire Mock Drill" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🔥 Fire Mock Drill</h5>
+                                <p class="text-[8px] text-gray-300">Mar 2026 • 120 Participants</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 5 - Safety Week -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Safety Week - Feb 2026\n\nNational Safety Week Celebration\nEvents: Quiz, Poster, Essay\nWinners: 18 Workers\nTheme: Safety First')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/safetyweek1/320/180" alt="Safety Week" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🎉 Safety Week</h5>
+                                <p class="text-[8px] text-gray-300">Feb 2026 • 18 Winners</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 6 - Toolbox Talk -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Toolbox Talk - Jan 2026\n\nDaily Toolbox Talk Session\nTopic: Height Work Safety\nAttendees: 32 workers\nLocation: Site-2 Assembly Point')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/toolboxtalk1/320/180" alt="Toolbox Talk" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">💬 Toolbox Talk</h5>
+                                <p class="text-[8px] text-gray-300">Jan 2026 • 32 Workers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 7 - HSE Audit -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 HSE Audit - Dec 2025\n\nQuarterly HSE Compliance Audit\nScore: 92/100\nFindings: 3 Minor NCs\nStatus: Closed')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/hseaudit1/320/180" alt="HSE Audit" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">📋 HSE Audit</h5>
+                                <p class="text-[8px] text-gray-300">Dec 2025 • Score 92%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 8 - Wellness Camp -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Wellness Camp - Nov 2025\n\nAnnual Health & Wellness Camp\nWorkers Checked: 156\nTests: BP, Sugar, Eye, Spirometry\nPartner: Apollo Hospitals')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/wellnesscamp1/320/180" alt="Wellness Camp" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🏥 Wellness Camp</h5>
+                                <p class="text-[8px] text-gray-300">Nov 2025 • 156 Checkups</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Safety Drill - June 2026\n\nConfined Space Rescue Mock Drill\nParticipants: 24 workers\nLocation: Site-4 Blast Furnace\nConducted by: TSL Safety Team')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/safetydrill2/320/180" alt="Safety Drill" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🚒 Safety Drill</h5>
+                                <p class="text-[8px] text-gray-300">Jun 2026 • 24 Participants</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Safety Awards - May 2026\n\nMonthly Safety Excellence Awards\nAwardees: 12 Workers\nVenue: Main Auditorium\nChief Guest: Plant Head')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/safetyawards2/320/180" alt="Safety Awards" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🏆 Safety Awards</h5>
+                                <p class="text-[8px] text-gray-300">May 2026 • 12 Awardees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Training Session - Apr 2026\n\nPPE Usage & Care Workshop\nAttendees: 45 workers\nDuration: 2 Hours\nTrainer: Mr. Sharma (Safety Officer)')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/trainingsession2/320/180" alt="Training Session" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">📚 Training Session</h5>
+                                <p class="text-[8px] text-gray-300">Apr 2026 • 45 Attendees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Fire Mock Drill - Mar 2026\n\nAnnual Fire Evacuation Drill\nParticipants: 120 workers\nEvacuation Time: 4 min 32 sec\nAssessment: Excellent')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/firedrill2/320/180" alt="Fire Mock Drill" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🔥 Fire Mock Drill</h5>
+                                <p class="text-[8px] text-gray-300">Mar 2026 • 120 Participants</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Safety Week - Feb 2026\n\nNational Safety Week Celebration\nEvents: Quiz, Poster, Essay\nWinners: 18 Workers\nTheme: Safety First')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/safetyweek2/320/180" alt="Safety Week" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🎉 Safety Week</h5>
+                                <p class="text-[8px] text-gray-300">Feb 2026 • 18 Winners</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Toolbox Talk - Jan 2026\n\nDaily Toolbox Talk Session\nTopic: Height Work Safety\nAttendees: 32 workers\nLocation: Site-2 Assembly Point')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/toolboxtalk2/320/180" alt="Toolbox Talk" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">💬 Toolbox Talk</h5>
+                                <p class="text-[8px] text-gray-300">Jan 2026 • 32 Workers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 HSE Audit - Dec 2025\n\nQuarterly HSE Compliance Audit\nScore: 92/100\nFindings: 3 Minor NCs\nStatus: Closed')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/hseaudit2/320/180" alt="HSE Audit" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">📋 HSE Audit</h5>
+                                <p class="text-[8px] text-gray-300">Dec 2025 • Score 92%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition shadow-sm border border-gray-200" onclick="alert('📸 Wellness Camp - Nov 2025\n\nAnnual Health & Wellness Camp\nWorkers Checked: 156\nTests: BP, Sugar, Eye, Spirometry\nPartner: Apollo Hospitals')">
+                        <div class="relative w-full h-28 bg-gray-900">
+                            <img src="https://picsum.photos/seed/wellnesscamp2/320/180" alt="Wellness Camp" class="w-full h-full object-cover opacity-85 hover:opacity-100 transition" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-2 left-2 right-2">
+                                <h5 class="text-[11px] font-bold text-white drop-shadow-lg">🏥 Wellness Camp</h5>
+                                <p class="text-[8px] text-gray-300">Nov 2025 • 156 Checkups</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 px-4 text-[10px] font-semibold border-t border-slate-800 mt-auto z-10">
+        <div class="text-slate-200 font-bold uppercase tracking-wider text-[11px] mb-1">EMVEESS INFRAVENTURES PVT LTD</div>
+        <div class="text-slate-400 font-medium mb-1 leading-relaxed" id="footerAddr">
+            Supply Chain Management, West Bokaro Ghato Tand,<br>
+            Ramgarh, Jharkhand, India
+        </div>
+        <div class="text-slate-500 font-medium mb-2.5">
+            📧 <a href="mailto:scm@emvs.in" class="text-emerald-400 hover:text-emerald-300 transition">scm@emvs.in</a>
+        </div>
+        <div class="pt-2.5 border-t border-slate-800 text-slate-600 flex flex-col items-center gap-1">
+            <span>Created &amp; Powered by <span class="text-emerald-500 font-black">Safexindia.in</span></span>
+            <span class="text-[9px] text-slate-600">&copy; Copyright Reserved 2026 &copy; Musahid</span>
+        </div>
+    </footer>
+
+    <!-- 🎓 TRAINING MANAGEMENT MODAL -->
+    <div id="trainingManagementModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col my-4">
+            <div class="bg-blue-600 text-white px-4 py-3.5 flex justify-between items-center sticky top-0">
+                <h3 class="font-black text-sm uppercase tracking-wide" id="trainingModalTitle">🎓 Training Management Portal</h3>
+                <button onclick="closeTrainingManagement()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            
+            <div class="p-4 space-y-4 overflow-y-auto max-h-[80vh]">
+                
+                <!-- 📺 TRAINING VIDEOS SECTION -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-blue-200">
+                        <i data-lucide="play-circle" class="w-5 h-5 text-blue-600"></i>
+                        <h4 class="text-sm font-bold text-blue-900" id="trainingVideosTitle">📺 Training Videos</h4>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div onclick="alert('Playing: Safety Fundamentals - Part 1\n⏱️ Duration: 12 mins\nClick to Watch')" class="flex items-center gap-3 p-3 bg-white border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-50 transition">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 text-lg">▶️</div>
+                            <div class="flex-1 text-xs">
+                                <h5 class="font-bold text-slate-800">Safety Fundamentals - Part 1</h5>
+                                <p class="text-slate-500">⏱️ 12 mins • Beginner</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-2 py-1 rounded">✓ Watched</span>
+                        </div>
+                        <div onclick="alert('Playing: PPE Usage & Care\n⏱️ Duration: 8 mins\nClick to Watch')" class="flex items-center gap-3 p-3 bg-white border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-50 transition">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 text-lg">▶️</div>
+                            <div class="flex-1 text-xs">
+                                <h5 class="font-bold text-slate-800">PPE Usage & Care</h5>
+                                <p class="text-slate-500">⏱️ 8 mins • Beginner</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-2 py-1 rounded">✓ Watched</span>
+                        </div>
+                        <div onclick="alert('Playing: Hazard Identification\n⏱️ Duration: 15 mins\nClick to Watch')" class="flex items-center gap-3 p-3 bg-white border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-50 transition">
+                            <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 text-lg">▶️</div>
+                            <div class="flex-1 text-xs">
+                                <h5 class="font-bold text-slate-800">Hazard Identification</h5>
+                                <p class="text-slate-500">⏱️ 15 mins • Intermediate</p>
+                            </div>
+                            <span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-2 py-1 rounded">► Pending</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 📋 ASSESSMENT SECTION -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-emerald-200">
+                        <i data-lucide="clipboard-check" class="w-5 h-5 text-emerald-600"></i>
+                        <h4 class="text-sm font-bold text-emerald-900" id="trainingAssessmentTitle">📋 Assessment</h4>
+                    </div>
+                    <div class="bg-white border border-emerald-100 rounded-lg p-3">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-800">Safety Fundamentals - Quiz</h5>
+                                <p class="text-[9px] text-slate-500 mt-0.5">20 Questions • 30 mins • Required</p>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold px-2 py-1 rounded">Score: 92%</span>
+                        </div>
+                        <div class="bg-emerald-100 rounded-full h-2 mb-2 overflow-hidden">
+                            <div class="bg-emerald-600 h-full" style="width: 92%;"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="downloadCertificate()" class="text-[9px] font-bold bg-emerald-600 text-white px-3 py-1.5 rounded-lg hover:bg-emerald-700 transition">📥 Download Certificate</button>
+                            <button onclick="alert('Viewing Certificate Details')" class="text-[9px] font-bold bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-300 transition">👁️ View</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 💭 TRAINING FEEDBACK SECTION -->
+                <div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-purple-200">
+                        <i data-lucide="message-circle" class="w-5 h-5 text-purple-600"></i>
+                        <h4 class="text-sm font-bold text-purple-900" id="trainingFeedbackTitle">💭 Training Feedback</h4>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div class="bg-white border border-purple-100 rounded-lg p-3">
+                            <div class="flex justify-between items-center mb-2">
+                                <h5 class="text-xs font-bold text-slate-800">Pre-Assessment Feedback</h5>
+                                <span class="text-[9px] text-purple-600 font-bold">Before Training</span>
+                            </div>
+                            <p class="text-[9px] text-slate-500 mb-2">Rate your knowledge & comfort level before starting the training module</p>
+                            <button onclick="openFeedbackForm('Pre-Training')" class="w-full text-[9px] font-bold bg-purple-600 text-white px-3 py-2 rounded-lg hover:bg-purple-700 transition">📝 Provide Pre-Training Feedback</button>
+                        </div>
+                        <div class="bg-white border border-purple-100 rounded-lg p-3">
+                            <div class="flex justify-between items-center mb-2">
+                                <h5 class="text-xs font-bold text-slate-800">Post-Assessment Feedback</h5>
+                                <span class="text-[9px] text-emerald-600 font-bold">After Training</span>
+                            </div>
+                            <p class="text-[9px] text-slate-500 mb-2">Share your experience, improvements & suggestions after completing the training</p>
+                            <button onclick="openFeedbackForm('Post-Training')" class="w-full text-[9px] font-bold bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition">📝 Provide Post-Training Feedback</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CLOSE BUTTON -->
+                <button onclick="closeTrainingManagement()" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-slate-800 transition">Close Portal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📝 TRAINING FEEDBACK MODAL -->
+    <div id="trainingFeedbackModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-purple-600 text-white px-4 py-3.5 flex justify-between items-center">
+                <h3 id="feedbackModalTitle" class="font-black text-sm uppercase">Training Feedback</h3>
+                <button onclick="closeTrainingFeedback()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            <form onsubmit="handleTrainingFeedback(event)" class="p-4 space-y-3">
+                <input type="hidden" id="feedbackType">
+                
+                <div>
+                    <label class="text-xs font-bold text-slate-700 block mb-1" id="feedbackLabel">Training Module</label>
+                    <select id="trainingModule" class="w-full text-xs border border-gray-300 rounded-lg p-2.5 bg-gray-50" required>
+                        <option value="">Select a module...</option>
+                        <option value="Safety Fundamentals">Safety Fundamentals - Part 1</option>
+                        <option value="PPE Usage">PPE Usage & Care</option>
+                        <option value="Hazard Identification">Hazard Identification</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="text-xs font-bold text-slate-700 block mb-1">Overall Rating</label>
+                    <div class="flex gap-2 justify-center">
+                        <button type="button" onclick="setRating(1)" class="w-10 h-10 rounded-lg border-2 border-gray-200 text-sm font-bold hover:border-purple-600 transition" id="rating1">😞</button>
+                        <button type="button" onclick="setRating(2)" class="w-10 h-10 rounded-lg border-2 border-gray-200 text-sm font-bold hover:border-purple-600 transition" id="rating2">😐</button>
+                        <button type="button" onclick="setRating(3)" class="w-10 h-10 rounded-lg border-2 border-gray-200 text-sm font-bold hover:border-purple-600 transition" id="rating3">😊</button>
+                        <button type="button" onclick="setRating(4)" class="w-10 h-10 rounded-lg border-2 border-gray-200 text-sm font-bold hover:border-purple-600 transition" id="rating4">😄</button>
+                        <button type="button" onclick="setRating(5)" class="w-10 h-10 rounded-lg border-2 border-gray-200 text-sm font-bold hover:border-purple-600 transition" id="rating5">🤩</button>
+                    </div>
+                    <input type="hidden" id="selectedRating" value="0">
+                </div>
+                
+                <div>
+                    <label class="text-xs font-bold text-slate-700 block mb-1" id="feedbackTextLabel">Your Feedback</label>
+                    <textarea id="feedbackText" placeholder="Share your thoughts, suggestions, or improvements..." class="w-full text-xs border border-gray-300 rounded-lg p-2.5 resize-none h-24" required></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-xs hover:bg-purple-700 transition">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODALS PANEL (PUBLIC SEARCH, OFFICER LOGIN, REPORTING, ACCIDENT POP-UPS KEPT INTACT) -->
+    <div id="publicSearchModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-emerald-600 text-white px-4 py-3.5 flex justify-between items-center">
+                <h3 class="font-black text-sm uppercase tracking-wide">Search Worker Profile</h3>
+                <button onclick="closePublicSearchModal()" class="text-white font-bold">✕</button>
+            </div>
+            <div class="p-4 space-y-4">
+                <select id="publicSearchPlant" class="w-full text-xs border p-2.5 bg-gray-50 rounded-lg"><option value="TSL-Kalinganagar">TSL - Kalinganagar</option><option value="TSL-Jamshedpur">TSL - Jamshedpur</option></select>
+                <div class="flex gap-2"><input type="text" id="publicSearchEmpId" placeholder="E.g., TSL-EMP-101" class="w-full text-xs border rounded-lg p-2.5 font-bold uppercase"/><button onclick="executePublicLiveSearch()" class="bg-emerald-600 text-white font-bold text-xs px-4 rounded-lg">Search</button></div>
+                <div id="publicResultBox" class="hidden rounded-xl p-3 text-xs border"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔐 SAFETY OFFICER LOGIN MODAL (Premium Safex Gateway Design) -->
+    <div id="officerModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-800">
+            
+            <!-- Premium Branding Header -->
+            <div class="text-center pt-6 pb-2 px-6 space-y-1.5">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto shadow-lg">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-lg font-black tracking-tight text-white pt-1">Safety Officer Login Window</h3>
+                <p class="text-xs text-slate-400">Authorized Personnel Session Verification</p>
+                <button onclick="closeOfficerModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white font-bold text-lg transition">✕</button>
+            </div>
+
+            <!-- LIVE NOTIFICATION WARNING -->
+            <div class="mx-6 bg-slate-950 border-l-2 border-amber-500 p-2.5 rounded-r-xl flex items-start gap-2.5">
+                <i data-lucide="alert-octagon" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
+                <p class="text-[10px] text-slate-400 leading-normal">
+                    Strict Access: Only <span class="text-amber-400 font-bold">3 White-listed Officer IDs</span> can clear authorization. Activity telemetry is continuously logged.
+                </p>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <div id="loginFormFrame" class="space-y-4">
+                    
+                    <!-- 1. USER ID INPUT -->
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5">Enter Officer User ID</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                                <i data-lucide="key-round" class="w-4 h-4"></i>
+                            </div>
+                            <input type="text" id="officerUser" required placeholder="E.g., TSL-OFF-01" class="w-full text-xs bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 font-bold text-slate-200 focus:outline-none focus:border-amber-500 transition shadow-inner" />
+                        </div>
+                    </div>
+
+                    <!-- 2. DYNAMIC PLANT ID SELECTION DROPDOWN -->
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5">Select Active Plant / Posting Location</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                                <i data-lucide="factory" class="w-4 h-4"></i>
+                            </div>
+                            <select id="officerPlant" required class="w-full text-xs bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 font-bold text-slate-300 focus:outline-none focus:border-amber-500 transition appearance-none">
+                                <option value="" disabled selected>-- Choose Stationed Plant --</option>
+                                <option value="TSL-Kalinganagar">Tata Steel Kalinganagar (TSK)</option>
+                                <option value="TSL-Jamshedpur">Tata Steel Jamshedpur (Main Works)</option>
+                                <option value="TSL-Meramandali">Tata Steel Meramandali (TSM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 3. PASSWORD FIELD -->
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5">Enter Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                                <i data-lucide="lock" class="w-4 h-4"></i>
+                            </div>
+                            <input type="password" id="officerPass" required placeholder="••••••••" class="w-full text-xs bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 font-bold text-slate-200 focus:outline-none focus:border-amber-500 transition shadow-inner" />
+                        </div>
+                    </div>
+
+                    <!-- 4. FORGOT USERNAME / PASSWORD LINKS -->
+                    <div class="flex justify-between text-[10px] -mt-1">
+                        <button onclick="forgotUsername()" class="text-slate-500 hover:text-amber-400 font-medium transition flex items-center gap-1">
+                            <i data-lucide="help-circle" class="w-3 h-3"></i> Forgot Username?
+                        </button>
+                        <button onclick="forgotPassword()" class="text-slate-500 hover:text-amber-400 font-medium transition flex items-center gap-1">
+                            <i data-lucide="help-circle" class="w-3 h-3"></i> Forgot Password?
+                        </button>
+                    </div>
+
+                    <!-- 5. SUBMIT GATEWAY ACCESS BUTTON -->
+                    <button onclick="validateOfficerLogin()" class="w-full mt-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-slate-950 text-xs font-black py-3 rounded-xl transition shadow-lg active:scale-[0.99] flex items-center justify-center gap-1.5">
+                        <i data-lucide="lock-open" class="w-4 h-4"></i> Establish Secure Session
+                    </button>
+
+                    <!-- 6. CLOSE / BACK BUTTON -->
+                    <button onclick="closeOfficerModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold py-2.5 rounded-xl transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i> Close / Back
+                    </button>
+                </div>
+                <div id="searchInterfaceFrame" class="hidden space-y-4">
+                    <div class="bg-emerald-50 p-2 flex justify-between items-center rounded-lg"><span class="text-[10px] text-emerald-800 font-bold">🟢 Stationed: <span id="activeStationBadge">None</span></span><button onclick="logoutOfficer()" class="text-[9px] bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">Logout</button></div>
+                    <div class="flex gap-2"><input type="text" id="searchEmpId" placeholder="E.g., TSL-EMP-101" class="w-full text-xs border rounded-lg p-2.5 font-bold uppercase"/><button onclick="executeLiveSearch()" class="bg-emerald-600 text-white text-xs font-bold px-4 rounded-lg">Search</button></div>
+                    <div id="liveResultBox" class="hidden rounded-xl p-3 text-xs border"></div>
+                </div>
+            </div>
+
+            <!-- GATEWAY FOOTER -->
+            <div class="text-center text-[10px] text-slate-600 font-semibold pb-4">
+                &copy; 2026 Safex Multitenant Security Protocol • Compliant with TSL Audit Policies
+            </div>
+        </div>
+    </div>
+
+    <div id="reportingModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col my-4">
+            <div class="bg-slate-900 text-white px-4 py-3.5 flex justify-between items-center sticky top-0">
+                <h3 id="modalFormTitle" class="font-black text-sm uppercase">Near Miss Report</h3>
+                <button onclick="closeReportingForm()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            <form onsubmit="handleFormSubmit(event)" class="p-4 space-y-3 overflow-y-auto max-h-[80vh]">
+                
+                <!-- 1️⃣ EMPLOYEE NAME WITH AUTO-LOOKUP -->
+                <div>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">👤 आपका नाम (Your Name)</label>
+                    <input type="text" id="reportWorkerName" required placeholder="Type name..." 
+                           oninput="triggerLiveNameLookup(this.value)"
+                           class="w-full text-xs border border-gray-200 rounded-lg p-2.5 font-semibold text-slate-800 focus:outline-emerald-500"/>
+                    <span id="lookupStatus" class="text-[9px] text-slate-400 mt-0.5 block"></span>
+                </div>
+
+                <!-- 2️⃣ AUTO-FILLED FIELDS -->
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">ID (Auto)</label>
+                        <input type="text" id="reportEmpId" readonly placeholder="Auto-fill" 
+                               class="w-full text-xs border border-gray-100 bg-gray-100 rounded-lg p-2 font-bold text-slate-600"/>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Designation (Auto)</label>
+                        <input type="text" id="reportDesignation" readonly placeholder="Auto-fill" 
+                               class="w-full text-xs border border-gray-100 bg-gray-100 rounded-lg p-2 font-bold text-slate-600"/>
+                    </div>
+                </div>
+
+                <!-- 🔒 ANONYMOUS SUBMIT OPTION (ONLY FOR SPEAK UP) -->
+                <div id="anonymousContainer" class="hidden bg-indigo-50 border border-indigo-200 rounded-lg p-2.5">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="reportAnonymous" 
+                               class="w-4 h-4 accent-indigo-600 cursor-pointer"/>
+                        <span class="text-xs font-bold text-indigo-700">🔒 Submit Anonymously</span>
+                    </label>
+                    <p class="text-[8px] text-indigo-600 mt-1 ml-6">Your identity will be protected. Concern details will be logged without your name.</p>
+                </div>
+
+                <!-- 3️⃣ INCIDENT LOCATION -->
+                <div id="locationContainer">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">📍 Location</label>
+                    <input type="text" id="reportLocation" placeholder="E.g., Blast Furnace Site-4, Sheet Mill A" 
+                           class="w-full text-xs border border-gray-200 rounded-lg p-2 font-medium text-slate-800 focus:outline-emerald-500"/>
+                </div>
+
+                <!-- 4️⃣ DEPARTMENT -->
+                <div id="deptContainer">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">🏢 Department</label>
+                    <input type="text" id="reportDept" placeholder="E.g., Operations" 
+                           class="w-full text-xs border border-gray-200 rounded-lg p-2 font-medium text-slate-800 focus:outline-emerald-500"/>
+                </div>
+
+                <!-- 5️⃣ DATE & TIME -->
+                <div id="dateTimeContainer">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">🕐 Date & Time of Incident</label>
+                    <input type="datetime-local" id="reportDateTime" required 
+                           class="w-full text-xs border border-gray-200 rounded-lg p-2 font-medium text-slate-800 focus:outline-emerald-500"/>
+                </div>
+
+                <!-- 6️⃣ INCIDENT/HAZARD DESCRIPTION -->
+                <div>
+                    <label id="descLabel" class="block text-[10px] font-black text-slate-600 uppercase mb-1">📝 Description of Incident</label>
+                    <textarea id="reportDesc" required rows="3" placeholder="Describe what happened clearly..." 
+                              class="w-full text-xs border border-gray-200 rounded-lg p-2 font-medium text-slate-800 focus:outline-emerald-500"></textarea>
+                </div>
+
+                <!-- 7️⃣ SEVERITY RATING (FOR HAZARD) -->
+                <div id="severityContainer" class="hidden">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">⚠️ Severity Rating</label>
+                    <select id="reportSeverity" class="w-full text-xs border border-gray-200 rounded-lg p-2.5 font-semibold text-slate-800 focus:outline-emerald-500">
+                        <option value="">-- Select Severity --</option>
+                        <option value="Low">🟢 Low Risk</option>
+                        <option value="Medium">🟡 Medium Risk</option>
+                        <option value="High">🔴 High Risk</option>
+                    </select>
+                </div>
+
+                <!-- 8️⃣ IMMEDIATE ACTION TAKEN -->
+                <div>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">⚡ Immediate Action Taken (if any)</label>
+                    <textarea id="reportAction" rows="2" placeholder="Optional - What action was taken immediately?" 
+                              class="w-full text-xs border border-gray-200 rounded-lg p-2 font-medium text-slate-800 focus:outline-emerald-500"></textarea>
+                </div>
+
+                <!-- 9️⃣ PHOTO UPLOAD (OPTIONAL) -->
+                <div id="photoUploadContainer">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">📸 Attach Photo (Optional)</label>
+                    <input type="file" id="reportPhoto" accept="image/*" 
+                           class="w-full text-[11px] border border-gray-200 bg-gray-50 rounded-lg p-2 text-slate-600 focus:outline-emerald-500"/>
+                    <p class="text-[8px] text-slate-400 mt-1">Helps document the incident better</p>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition shadow-md">
+                    ✅ Submit to Vault
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="accidentSelectModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 space-y-4 text-center">
+            <h3 class="text-sm font-black uppercase tracking-wide">Select Accident Category</h3>
+            <div class="flex flex-col gap-2">
+                <button onclick="selectAccidentType('Reporting Accident')" class="p-3 bg-rose-50 border border-rose-200 text-xs font-bold text-rose-700 text-left rounded-xl">⚠️ Reporting Accident</button>
+                <button onclick="selectAccidentType('Property Damage')" class="p-3 bg-amber-50 border border-amber-200 text-xs font-bold text-amber-700 text-left rounded-xl">🏗️ Property Damage</button>
+                <button onclick="selectAccidentType('Red Risk')" class="p-3 bg-red-900 border text-xs font-bold text-white text-left rounded-xl animate-pulse">🔥 Red Risk Incident</button>
+            </div>
+            <button onclick="closeAccidentSelectModal()" class="w-full bg-slate-100 font-bold py-2 rounded-xl text-xs">Back</button>
+        </div>
+    </div>
+
+    <!-- OBSERVATION TYPE SELECT MODAL -->
+    <div id="observationSelectModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 space-y-4 text-center">
+            <h3 class="text-sm font-black uppercase tracking-wide">🔍 Select Observation Type</h3>
+            <div class="flex flex-col gap-2">
+                <button onclick="selectObservationType('UC/UA')" class="p-3 bg-red-50 border border-red-200 text-xs font-bold text-red-700 text-left rounded-xl">
+                    ⚠️ UC/UA (Unsafe Condition / Unsafe Act)
+                </button>
+                <button onclick="selectObservationType('Safe Observation')" class="p-3 bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-700 text-left rounded-xl">
+                    ✅ Safe Observation (Good Practice)
+                </button>
+            </div>
+            <button onclick="closeObservationSelectModal()" class="w-full bg-slate-100 font-bold py-2 rounded-xl text-xs">Back</button>
+        </div>
+    </div>
+
+    <!-- FEEDBACK TYPE SELECT MODAL -->
+    <div id="feedbackSelectModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 space-y-3 text-center my-4">
+            <h3 class="text-sm font-black uppercase tracking-wide">📝 Select Feedback Category</h3>
+            <div class="flex flex-col gap-2">
+                <button onclick="selectFeedbackType('PPE Feedback')" class="p-3 bg-blue-50 border border-blue-200 text-xs font-bold text-blue-700 text-left rounded-xl">
+                    👕 PPE (Personal Protective Equipment)
+                </button>
+                <button onclick="selectFeedbackType('Tool Tackles')" class="p-3 bg-orange-50 border border-orange-200 text-xs font-bold text-orange-700 text-left rounded-xl">
+                    🔧 Tool Tackles / Equipment
+                </button>
+                <button onclick="selectFeedbackType('Training Feedback')" class="p-3 bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 text-left rounded-xl">
+                    📚 Training Feedback
+                </button>
+                <button onclick="selectFeedbackType('Grievance Feedback')" class="p-3 bg-red-50 border border-red-200 text-xs font-bold text-red-700 text-left rounded-xl">
+                    😞 Grievance Feedback
+                </button>
+                <button onclick="selectFeedbackType('Amenities Welfare')" class="p-3 bg-green-50 border border-green-200 text-xs font-bold text-green-700 text-left rounded-xl">
+                    🏢 Amenities & Welfare Feedback
+                </button>
+                <button onclick="selectFeedbackType('Observation Closing')" class="p-3 bg-purple-50 border border-purple-200 text-xs font-bold text-purple-700 text-left rounded-xl">
+                    ✅ Observation Closing Feedback
+                </button>
+            </div>
+            <button onclick="closeFeedbackSelectModal()" class="w-full bg-slate-100 font-bold py-2 rounded-xl text-xs">Back</button>
+        </div>
+    </div>
+
+    <!-- GRIEVANCE TYPE SELECT MODAL -->
+    <div id="grievanceSelectModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 space-y-3 text-center my-4">
+            <h3 class="text-sm font-black uppercase tracking-wide">😞 Select Grievance Type</h3>
+            <div class="flex flex-col gap-2">
+                <button onclick="selectGrievanceType('Welfare')" class="p-3 bg-blue-50 border border-blue-200 text-xs font-bold text-blue-700 text-left rounded-xl">
+                    💝 Welfare
+                </button>
+                <button onclick="selectGrievanceType('Amenities')" class="p-3 bg-green-50 border border-green-200 text-xs font-bold text-green-700 text-left rounded-xl">
+                    🏢 Amenities
+                </button>
+                <button onclick="selectGrievanceType('Wages')" class="p-3 bg-amber-50 border border-amber-200 text-xs font-bold text-amber-700 text-left rounded-xl">
+                    💰 Wages / Salary
+                </button>
+                <button onclick="selectGrievanceType('Safety')" class="p-3 bg-red-50 border border-red-200 text-xs font-bold text-red-700 text-left rounded-xl">
+                    🛡️ Safety Concerns
+                </button>
+                <button onclick="selectGrievanceType('Workplace')" class="p-3 bg-orange-50 border border-orange-200 text-xs font-bold text-orange-700 text-left rounded-xl">
+                    🏭 Workplace Issues
+                </button>
+                <button onclick="selectGrievanceType('Other')" class="p-3 bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 text-left rounded-xl">
+                    ❓ Other
+                </button>
+            </div>
+            <button onclick="closeGrievanceSelectModal()" class="w-full bg-slate-100 font-bold py-2 rounded-xl text-xs">Back</button>
+        </div>
+    </div>
+
+    <!-- SUGGESTION TYPE SELECT MODAL -->
+    <div id="suggestionSelectModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 space-y-4 text-center">
+            <h3 class="text-sm font-black uppercase tracking-wide">💡 Select Suggestion Type</h3>
+            <div class="flex flex-col gap-2">
+                <button onclick="selectSuggestionType('PPE Suggestion')" class="p-3 bg-blue-50 border border-blue-200 text-xs font-bold text-blue-700 text-left rounded-xl">
+                    👕 PPE Suggestion
+                </button>
+                <button onclick="selectSuggestionType('Training Suggestion')" class="p-3 bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 text-left rounded-xl">
+                    📚 Training Suggestion
+                </button>
+                <button onclick="selectSuggestionType('Tool Suggestion')" class="p-3 bg-orange-50 border border-orange-200 text-xs font-bold text-orange-700 text-left rounded-xl">
+                    🔧 Tool/Equipment Suggestion
+                </button>
+            </div>
+            <button onclick="closeSuggestionSelectModal()" class="w-full bg-slate-100 font-bold py-2 rounded-xl text-xs">Back</button>
+        </div>
+    </div>
+
+    <!-- 📜 ALL POLICY SUB-LIST MODAL -->
+    <div id="allPolicyModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col my-4">
+            <div class="bg-indigo-600 text-white px-4 py-3.5 flex justify-between items-center sticky top-0">
+                <h3 class="font-black text-sm uppercase tracking-wide" id="allPolicyModalTitle">📜 All Policy Documents</h3>
+                <button onclick="closeAllPolicyModal()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            <div class="p-4 space-y-3 overflow-y-auto max-h-[80vh]">
+                <!-- Safety Policy -->
+                <div onclick="alert('🛡️ Safety Policy\\n\\nFile: Safety_Policy_Handbook.pdf\\nVersion: 3.1\\nPolicies: 26\\n\\n✅ Access granted')" class="flex items-center gap-3 p-3 bg-indigo-50 border border-indigo-200 rounded-xl hover:bg-indigo-100 cursor-pointer transition">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center shrink-0 text-lg">🛡️</div>
+                    <div class="flex-1 text-xs">
+                        <h5 class="font-bold text-slate-800" id="allPolicySafetyTitle">Safety Policy</h5>
+                        <p class="text-[9px] text-slate-500" id="allPolicySafetySub">Safety Policy Handbook • 26 Policies</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                </div>
+                <!-- Reward Policy -->
+                <div onclick="alert('🏆 Reward & Recognition Policy\\n\\nFile: Reward_Recognition_Policy.pdf\\n\\nCategories:\\n- Safety Excellence Awards\\n- Monthly Recognition\\n- Incentive Scheme\\n\\n✅ Access granted')" class="flex items-center gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 cursor-pointer transition">
+                    <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 text-lg">🏆</div>
+                    <div class="flex-1 text-xs">
+                        <h5 class="font-bold text-slate-800" id="allPolicyRewardTitle">Reward Policy</h5>
+                        <p class="text-[9px] text-slate-500" id="allPolicyRewardSub">Recognition & Incentive Guidelines</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                </div>
+                <!-- Reward Criteria -->
+                <div onclick="alert('🎯 Reward Criteria\\n\\nFile: Reward_Criteria_Matrix.pdf\\n\\nCriteria:\\n- Zero Accident: ₹10,000\\n- Best Safety Suggestion: ₹5,000\\n- 100% PPE Compliance: ₹2,000\\n\\n✅ Access granted')" class="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-xl hover:bg-yellow-100 cursor-pointer transition">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center shrink-0 text-lg">🎯</div>
+                    <div class="flex-1 text-xs">
+                        <h5 class="font-bold text-slate-800" id="allPolicyRewardCritTitle">Reward Criteria</h5>
+                        <p class="text-[9px] text-slate-500" id="allPolicyRewardCritSub">Eligibility & Reward Matrix</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                </div>
+                <!-- Consequence Policy -->
+                <div onclick="alert('⚖️ Consequence Policy\\n\\nFile: Consequence_Management_Policy.pdf\\n\\nLevels:\\n- Level 1: Written Warning\\n- Level 2: Suspension\\n- Level 3: Termination\\n\\n✅ Access granted')" class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 cursor-pointer transition">
+                    <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center shrink-0 text-lg">⚖️</div>
+                    <div class="flex-1 text-xs">
+                        <h5 class="font-bold text-slate-800" id="allPolicyConseqTitle">Consequence Policy</h5>
+                        <p class="text-[9px] text-slate-500" id="allPolicyConseqSub">Disciplinary Action Framework</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                </div>
+                <!-- Consequence Criteria -->
+                <div onclick="alert('📋 Consequence Criteria\\n\\nFile: Consequence_Criteria_Matrix.pdf\\n\\nViolation Levels:\\n- Minor: Warning + Retraining\\n- Major: Suspension (1-7 days)\\n- Critical: Termination + Legal\\n\\n✅ Access granted')" class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 cursor-pointer transition">
+                    <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center shrink-0 text-lg">📋</div>
+                    <div class="flex-1 text-xs">
+                        <h5 class="font-bold text-slate-800" id="allPolicyConseqCritTitle">Consequence Criteria</h5>
+                        <p class="text-[9px] text-slate-500" id="allPolicyConseqCritSub">Violation Grading & Penalties</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                </div>
+            </div>
+            <div class="p-4 pt-0">
+                <button onclick="closeAllPolicyModal()" class="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-slate-800 transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚨 EMERGENCY PREPAREDNESS MODAL -->
+    <div id="emergencyPrepModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col my-4">
+            <div class="bg-rose-600 text-white px-4 py-3.5 flex justify-between items-center sticky top-0">
+                <h3 class="font-black text-sm uppercase tracking-wide" id="emergencyPrepModalTitle">🚨 Emergency Preparedness</h3>
+                <button onclick="closeEmergencyPrepModal()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            <div class="p-4 space-y-4 overflow-y-auto max-h-[80vh]">
+                
+                <!-- 1️⃣ TYPES OF EMERGENCY -->
+                <div class="bg-rose-50 border border-rose-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-rose-200">
+                        <i data-lucide="list" class="w-5 h-5 text-rose-600"></i>
+                        <h4 class="text-sm font-bold text-rose-900" id="emergencyTypesTitle">📋 Types of Emergency</h4>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 p-2 bg-white border border-rose-100 rounded-lg text-xs font-medium text-slate-700">
+                            <span class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center text-sm">🔥</span>
+                            <span id="emergencyTypeFire">Fire / Explosion</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 bg-white border border-rose-100 rounded-lg text-xs font-medium text-slate-700">
+                            <span class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-sm">💧</span>
+                            <span id="emergencyTypeChemical">Chemical Spill / Gas Leak</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 bg-white border border-rose-100 rounded-lg text-xs font-medium text-slate-700">
+                            <span class="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-sm">⚡</span>
+                            <span id="emergencyTypeElectro">Electrical Accident / Shock</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 bg-white border border-rose-100 rounded-lg text-xs font-medium text-slate-700">
+                            <span class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-sm">🏗️</span>
+                            <span id="emergencyTypeCollapse">Structure Collapse / Fall</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 bg-white border border-rose-100 rounded-lg text-xs font-medium text-slate-700">
+                            <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-sm">🚑</span>
+                            <span id="emergencyTypeMedical">Medical Emergency / Injury</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 bg-white border border-rose-100 rounded-lg text-xs font-medium text-slate-700">
+                            <span class="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center text-sm">🌊</span>
+                            <span id="emergencyTypeNatural">Natural Disaster (Flood / Storm)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2️⃣ WHAT TO DO IN EMERGENCY -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-amber-200">
+                        <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600"></i>
+                        <h4 class="text-sm font-bold text-amber-900" id="emergencyDoTitle">⚠️ Emergency Hone Par Kya Karein</h4>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div class="flex items-start gap-2 p-2.5 bg-white border border-amber-100 rounded-lg">
+                            <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">1</span>
+                            <div class="text-xs text-slate-700">
+                                <span class="font-bold text-slate-800" id="emergencyStep1Title">Shant Rahein:</span>
+                                <span id="emergencyStep1Desc">Ghabrana nahi, pehle situation ko samjhein aur control karein.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 p-2.5 bg-white border border-amber-100 rounded-lg">
+                            <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">2</span>
+                            <div class="text-xs text-slate-700">
+                                <span class="font-bold text-slate-800" id="emergencyStep2Title">Immediate Report Karein:</span>
+                                <span id="emergencyStep2Desc">Apne supervisor ya safety officer ko turant soochit karein.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 p-2.5 bg-white border border-amber-100 rounded-lg">
+                            <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">3</span>
+                            <div class="text-xs text-slate-700">
+                                <span class="font-bold text-slate-800" id="emergencyStep3Title">Area Khali Karein:</span>
+                                <span id="emergencyStep3Desc">Designated emergency exit se safe zone mein jayein.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 p-2.5 bg-white border border-amber-100 rounded-lg">
+                            <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">4</span>
+                            <div class="text-xs text-slate-700">
+                                <span class="font-bold text-slate-800" id="emergencyStep4Title">PPE Use Karein:</span>
+                                <span id="emergencyStep4Desc">Emergency ke hisaab se proper PPE pehnein (helmet, mask, gloves).</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 p-2.5 bg-white border border-amber-100 rounded-lg">
+                            <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">5</span>
+                            <div class="text-xs text-slate-700">
+                                <span class="font-bold text-slate-800" id="emergencyStep5Title">Doosron Ki Madad Karein:</span>
+                                <span id="emergencyStep5Desc">Zakhmi logon ko safe jagah le jaayein aur medical help bulayein.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3️⃣ HOW TO REPORT -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                    <div class="flex items-center gap-2 mb-3 pb-2 border-b border-blue-200">
+                        <i data-lucide="phone" class="w-5 h-5 text-blue-600"></i>
+                        <h4 class="text-sm font-bold text-blue-900" id="emergencyReportTitle">📞 Kaise Report Karein</h4>
+                    </div>
+                    <div class="space-y-3">
+                        <div onclick="alert('📞 Emergency Helpline\\n\\n☎️ Plant Emergency: 100\\n☎️ Fire Station: 101\\n☎️ Medical / Ambulance: 102\\n☎️ Safety Officer: 103\\n☎️ Security Control Room: 104\\n\\n✅ Dial now')" class="flex items-center gap-3 p-3 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 cursor-pointer transition">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 text-lg">📞</div>
+                            <div class="flex-1 text-xs">
+                                <h5 class="font-bold text-slate-800" id="emergencyHelplineTitle">Emergency Helpline Numbers</h5>
+                                <p class="text-[9px] text-slate-500" id="emergencyHelplineSub">Plant Emergency, Fire, Medical, Safety Officer</p>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                        </div>
+                        <div onclick="openReportingForm('Emergency')" class="flex items-center gap-3 p-3 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 cursor-pointer transition">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 text-lg">📝</div>
+                            <div class="flex-1 text-xs">
+                                <h5 class="font-bold text-slate-800" id="emergencyReportFormTitle">Emergency Report Form</h5>
+                                <p class="text-[9px] text-slate-500" id="emergencyReportFormSub">Submit detailed emergency incident report</p>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                        </div>
+                        <div onclick="alert('🚨 Emergency Reporting Steps\\n\\n1️⃣ Apna naam aur location batayein\\n2️⃣ Emergency type batayein (Fire/Chemical/Medical etc.)\\n3️⃣ Kitne log affected hain batayein\\n4️⃣ Koi immediate action liya hai to batayein\\n5️⃣ Supervisor ya Safety Officer ko call karein\\n\\n☎️ Emergency Helpline: 100')" class="flex items-center gap-3 p-3 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 cursor-pointer transition">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 text-lg">📋</div>
+                            <div class="flex-1 text-xs">
+                                <h5 class="font-bold text-slate-800" id="emergencyReportStepsTitle">Reporting Steps</h5>
+                                <p class="text-[9px] text-slate-500" id="emergencyReportStepsSub">Step-by-step reporting procedure</p>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-4 pt-0">
+                <button onclick="closeEmergencyPrepModal()" class="w-full bg-rose-600 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-rose-700 transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📊 SAFETY DASHBOARD MODAL -->
+    <div id="safetyDashboardModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col my-4">
+            <div class="bg-slate-900 text-white px-4 py-3.5 flex justify-between items-center sticky top-0">
+                <h3 class="font-black text-sm uppercase tracking-wide" id="dashboardModalTitle">📊 Safety Dashboard</h3>
+                <button onclick="closeSafetyDashboard()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            <div class="p-4 space-y-4 overflow-y-auto max-h-[80vh]">
+
+                <!-- 🏭 PLANT SELECT VIEW (shown first) -->
+                <div id="dashboardPlantSelectView">
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-5 text-center shadow-lg">
+                        <div class="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3 ring-2 ring-emerald-400/30">
+                            <i data-lucide="factory" class="w-8 h-8 text-emerald-400"></i>
+                        </div>
+                        <h4 class="text-sm font-black text-white mb-1" id="dashboardSelectTitle">Select Plant</h4>
+                        <p class="text-[10px] text-slate-400 mb-4" id="dashboardSelectSub">Choose a plant to view its safety dashboard</p>
+                        
+                        <div class="space-y-3">
+                            <select id="dashboardPlantSelect" class="w-full text-sm border border-slate-600 bg-slate-700 text-white rounded-xl p-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-400 appearance-none cursor-pointer">
+                                <option value="">— Select a Plant —</option>
+                                <option value="TSL-Kalinganagar">🏭 TSL - Kalinganagar (Odisha)</option>
+                                <option value="TSL-Jamshedpur">🏭 TSL - Jamshedpur (Jharkhand)</option>
+                                <option value="TSL-Meramandali">🏭 TSL - Meramandali (Odisha)</option>
+                            </select>
+                            <button onclick="openDashboardFromSelect()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-sm py-3 rounded-xl transition shadow-lg hover:shadow-emerald-500/25">
+                                📊 View Dashboard →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 📈 DASHBOARD VIEW (hidden initially) -->
+                <div id="dashboardMetricsView" class="hidden">
+                    
+                    <!-- Plant Header with Month Navigation -->
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl p-3.5 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center ring-1 ring-emerald-400/30">
+                                    <i data-lucide="factory" class="w-4 h-4 text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-black uppercase tracking-wide" id="dashboardPlantName">TSL - Kalinganagar</h4>
+                                    <p class="text-[8px] text-slate-400" id="dashboardMonthLabel">June 2026 • Monthly Summary</p>
+                                </div>
+                            </div>
+                            <button onclick="backToPlantSelect()" class="text-[8px] bg-slate-700 text-slate-300 px-2 py-1 rounded-lg hover:bg-slate-600 transition">✕ Change</button>
+                        </div>
+                        <!-- Month Navigation -->
+                        <div class="flex items-center justify-between bg-slate-800/50 rounded-lg p-1.5 mt-1">
+                            <button id="prevMonthBtn" onclick="prevMonth()" class="text-[9px] bg-slate-700 text-white px-2 py-1 rounded-lg hover:bg-slate-600 transition cursor-pointer flex items-center gap-1">
+                                <i data-lucide="chevron-left" class="w-3 h-3"></i> <span id="prevMonthLabel">Prev</span>
+                            </button>
+                            <span class="text-[10px] font-bold text-emerald-400" id="currentMonthDisplay">Jun 2026</span>
+                            <button id="nextMonthBtn" onclick="nextMonth()" class="text-[9px] bg-slate-700 text-white px-2 py-1 rounded-lg hover:bg-slate-600 transition cursor-pointer flex items-center gap-1">
+                                <span id="nextMonthLabel">Next</span> <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 🔴 LAGGING INDICATORS (Reactive / Outcome) -->
+                    <div class="bg-gradient-to-br from-rose-50 to-red-50/70 border border-red-200/60 rounded-xl p-3 shadow-sm">
+                        <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-red-200/60">
+                            <div class="w-5 h-5 bg-red-100 rounded-md flex items-center justify-center">
+                                <i data-lucide="alert-triangle" class="w-3 h-3 text-red-600"></i>
+                            </div>
+                            <h4 class="text-[9px] font-black text-red-800 uppercase tracking-wider" id="laggingTitle">🔴 Lagging Indicators</h4>
+                            <span class="text-[7px] text-red-500 font-medium ml-auto bg-red-100/60 px-1.5 py-0.5 rounded-full" id="laggingSub">Reactive</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <!-- Near Miss -->
+                            <div class="bg-white/80 border border-red-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-amber-600 drop-shadow-sm" id="metricNearMiss">12</div>
+                                <div class="text-[6px] font-bold text-amber-800 uppercase tracking-wider mt-0.5" id="metricNearMissLabel">Near Miss</div>
+                            </div>
+                            <!-- LTI -->
+                            <div class="bg-white/80 border border-red-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-red-600 drop-shadow-sm" id="metricLti">0</div>
+                                <div class="text-[6px] font-bold text-red-800 uppercase tracking-wider mt-0.5" id="metricLtiLabel">LTI</div>
+                            </div>
+                            <!-- FAC -->
+                            <div class="bg-white/80 border border-red-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-orange-600 drop-shadow-sm" id="metricFac">2</div>
+                                <div class="text-[6px] font-bold text-orange-800 uppercase tracking-wider mt-0.5" id="metricFacLabel">FAC</div>
+                            </div>
+                            <!-- FATAL -->
+                            <div class="bg-white/80 border border-red-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-rose-600 drop-shadow-sm" id="metricFatal">0</div>
+                                <div class="text-[6px] font-bold text-rose-800 uppercase tracking-wider mt-0.5" id="metricFatalLabel">FATAL</div>
+                            </div>
+                            <!-- Consequence -->
+                            <div class="bg-white/80 border border-red-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-slate-600 drop-shadow-sm" id="metricConsequence">1</div>
+                                <div class="text-[6px] font-bold text-slate-800 uppercase tracking-wider mt-0.5" id="metricConsequenceLabel">Consequence</div>
+                            </div>
+                            <!-- Events -->
+                            <div class="bg-white/80 border border-red-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-rose-600 drop-shadow-sm" id="metricEvents">7</div>
+                                <div class="text-[6px] font-bold text-rose-800 uppercase tracking-wider mt-0.5" id="metricEventsLabel">Events</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 🟢 LEADING INDICATORS (Proactive / Preventive) -->
+                    <div class="bg-gradient-to-br from-emerald-50 to-green-50/70 border border-emerald-200/60 rounded-xl p-3 shadow-sm">
+                        <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-emerald-200/60">
+                            <div class="w-5 h-5 bg-emerald-100 rounded-md flex items-center justify-center">
+                                <i data-lucide="trending-up" class="w-3 h-3 text-emerald-600"></i>
+                            </div>
+                            <h4 class="text-[9px] font-black text-emerald-800 uppercase tracking-wider" id="leadingTitle">🟢 Leading Indicators</h4>
+                            <span class="text-[7px] text-emerald-500 font-medium ml-auto bg-emerald-100/60 px-1.5 py-0.5 rounded-full" id="leadingSub">Proactive</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <!-- Line Walk -->
+                            <div class="bg-white/80 border border-emerald-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-blue-600 drop-shadow-sm" id="metricLineWalk">48</div>
+                                <div class="text-[6px] font-bold text-blue-800 uppercase tracking-wider mt-0.5" id="metricLineWalkLabel">Line Walk</div>
+                            </div>
+                            <!-- Audits -->
+                            <div class="bg-white/80 border border-emerald-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-purple-600 drop-shadow-sm" id="metricAudits">6</div>
+                                <div class="text-[6px] font-bold text-purple-800 uppercase tracking-wider mt-0.5" id="metricAuditsLabel">Audits</div>
+                            </div>
+                            <!-- Training -->
+                            <div class="bg-white/80 border border-emerald-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-indigo-600 drop-shadow-sm" id="metricTraining">4</div>
+                                <div class="text-[6px] font-bold text-indigo-800 uppercase tracking-wider mt-0.5" id="metricTrainingLabel">Training</div>
+                            </div>
+                            <!-- UC -->
+                            <div class="bg-white/80 border border-emerald-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-cyan-600 drop-shadow-sm" id="metricUc">8</div>
+                                <div class="text-[6px] font-bold text-cyan-800 uppercase tracking-wider mt-0.5" id="metricUcLabel">UC</div>
+                            </div>
+                            <!-- UA -->
+                            <div class="bg-white/80 border border-emerald-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-sky-600 drop-shadow-sm" id="metricUa">5</div>
+                                <div class="text-[6px] font-bold text-sky-800 uppercase tracking-wider mt-0.5" id="metricUaLabel">UA</div>
+                            </div>
+                            <!-- Reward -->
+                            <div class="bg-white/80 border border-emerald-200/40 rounded-lg p-2 text-center hover:shadow-sm transition">
+                                <div class="text-lg font-black text-emerald-600 drop-shadow-sm" id="metricReward">3</div>
+                                <div class="text-[6px] font-bold text-emerald-800 uppercase tracking-wider mt-0.5" id="metricRewardLabel">Reward</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 📊 MONTHLY TREND CHART - Premium -->
+                    <div class="bg-gradient-to-br from-white to-slate-50 border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-slate-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-slate-700"></i>
+                                </div>
+                                <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide" id="chartTitle">Monthly Trend</h4>
+                            </div>
+                            <span class="text-[8px] text-slate-400 font-medium bg-slate-100 px-2 py-0.5 rounded-full" id="chartPeriod">6-Month View</span>
+                        </div>
+                        <!-- Dynamic Bar Chart Container -->
+                        <div id="chartBarsContainer" class="flex items-end justify-between gap-1.5 h-28 pt-2">
+                            <!-- Bars rendered dynamically by JS -->
+                        </div>
+                        <div class="flex items-center justify-center gap-4 mt-3 pt-2 border-t border-gray-100">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 bg-amber-400 rounded-sm"></div>
+                                <span class="text-[7px] text-slate-500 font-medium" id="chartLegendIncidents">Incidents</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 bg-emerald-400 rounded-sm"></div>
+                                <span class="text-[7px] text-slate-500 font-medium" id="chartLegendSafe">Safe Obs.</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 bg-slate-900 rounded-sm ring-1 ring-amber-400"></div>
+                                <span class="text-[7px] text-slate-500 font-medium" id="chartLegendActive">Active Month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Close Button -->
+                    <button onclick="closeSafetyDashboard()" class="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white font-bold py-2.5 rounded-xl text-xs hover:from-slate-800 hover:to-slate-700 transition shadow-md">Close Dashboard</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚨 SAFETY ALERTS MODAL -->
+    <div id="safetyAlertsModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col my-4">
+            <div class="bg-rose-600 text-white px-4 py-3.5 flex justify-between items-center sticky top-0">
+                <h3 class="font-black text-sm uppercase tracking-wide" id="safetyAlertsModalTitle">🚨 Safety Alerts</h3>
+                <button onclick="closeSafetyAlertsModal()" class="text-white font-bold text-lg">✕</button>
+            </div>
+            <div class="p-4 space-y-3 overflow-y-auto max-h-[80vh]">
+
+                <!-- Category Selection View -->
+                <div id="safetyAlertsCategoryView">
+                    <!-- LTI at TSL -->
+                    <div onclick="showAlertCategory('lti')" class="flex items-center gap-3 p-3.5 bg-rose-50 border border-rose-200 rounded-xl hover:bg-rose-100 cursor-pointer transition shadow-sm">
+                        <div class="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center shrink-0 text-lg">⚠️</div>
+                        <div class="flex-1 text-xs">
+                            <h5 class="font-bold text-slate-800" id="alertCatLtiTitle">LTI at TSL</h5>
+                            <p class="text-[9px] text-slate-500" id="alertCatLtiSub">Lost Time Incidents at TSL Group Plants</p>
+                        </div>
+                        <span class="bg-rose-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full" id="alertCatLtiCount">4</span>
+                    </div>
+                    <!-- FATAL at TSL -->
+                    <div onclick="showAlertCategory('fatal')" class="flex items-center gap-3 p-3.5 bg-red-50 border border-red-200 rounded-xl hover:bg-red-100 cursor-pointer transition shadow-sm">
+                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center shrink-0 text-lg">💀</div>
+                        <div class="flex-1 text-xs">
+                            <h5 class="font-bold text-slate-800" id="alertCatFatalTitle">FATAL at TSL</h5>
+                            <p class="text-[9px] text-slate-500" id="alertCatFatalSub">Fatal Incidents at TSL Group Plants</p>
+                        </div>
+                        <span class="bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full" id="alertCatFatalCount">2</span>
+                    </div>
+                    <!-- Global (Not TSL) -->
+                    <div onclick="showAlertCategory('global')" class="flex items-center gap-3 p-3.5 bg-amber-50 border border-amber-200 rounded-xl hover:bg-amber-100 cursor-pointer transition shadow-sm">
+                        <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 text-lg">🌍</div>
+                        <div class="flex-1 text-xs">
+                            <h5 class="font-bold text-slate-800" id="alertCatGlobalTitle">Global (Not TSL)</h5>
+                            <p class="text-[9px] text-slate-500" id="alertCatGlobalSub">Major Incidents Worldwide for Learning</p>
+                        </div>
+                        <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full" id="alertCatGlobalCount">3</span>
+                    </div>
+                    <!-- Safety Alert for Employee -->
+                    <div onclick="showAlertCategory('employee')" class="flex items-center gap-3 p-3.5 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 cursor-pointer transition shadow-sm">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 text-lg">👷</div>
+                        <div class="flex-1 text-xs">
+                            <h5 class="font-bold text-slate-800" id="alertCatEmpTitle">Safety Alert for Employee</h5>
+                            <p class="text-[9px] text-slate-500" id="alertCatEmpSub">Personal Safety Alerts & Advisories</p>
+                        </div>
+                        <span class="bg-blue-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full" id="alertCatEmpCount">5</span>
+                    </div>
+                </div>
+
+                <!-- Detail View (hidden initially) -->
+                <div id="safetyAlertsDetailView" class="hidden">
+                    <!-- Back button + category title -->
+                    <div class="flex items-center gap-2 mb-3">
+                        <button onclick="backToAlertCategories()" class="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-1.5 rounded-lg hover:bg-slate-200 transition font-bold flex items-center gap-1">
+                            <i data-lucide="arrow-left" class="w-3 h-3"></i> <span id="alertBackBtn">Back</span>
+                        </button>
+                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide" id="alertDetailTitle">LTI at TSL</h4>
+                    </div>
+                    <!-- Incident list container -->
+                    <div id="alertIncidentList" class="space-y-2.5">
+                        <!-- Dynamically rendered by JS -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-4 pt-0">
+                <button onclick="closeSafetyAlertsModal()" class="w-full bg-rose-600 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-rose-700 transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MASTER TRANSLATION ENGINE SCRIPT -->
+    <script>
+        // 🔒 SAFEX SECURITY CONFIGURATION
+        // Supabase anon key is publishable by design (Row Level Security protects data)
+        const SAFEX_CONFIG = {
+            supabaseUrl: 'https://duyvrtunxqaawgytkxhv.supabase.co',
+            supabaseKey: 'sb_publishable_Zlek_bcKAv11vgZMvohs9Q_r0huogOg',
+            // ⏱️ Rate limiting: max submissions per minute per session
+            rateLimitMax: 5,
+            rateLimitWindowMs: 60000
+        };
+        const _supabase = supabase.createClient(SAFEX_CONFIG.supabaseUrl, SAFEX_CONFIG.supabaseKey);
+        lucide.createIcons();
+
+        // 🔒 INPUT SANITIZATION UTILITY — strips HTML/script tags from user input
+        function sanitizeInput(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.textContent;
+        }
+
+        // 🔒 RATE LIMITER — prevents rapid form submissions (anti-spam)
+        const _rateLimitStore = { count: 0, resetAt: Date.now() + SAFEX_CONFIG.rateLimitWindowMs };
+        function checkRateLimit() {
+            const now = Date.now();
+            if (now > _rateLimitStore.resetAt) {
+                _rateLimitStore.count = 0;
+                _rateLimitStore.resetAt = now + SAFEX_CONFIG.rateLimitWindowMs;
+            }
+            _rateLimitStore.count++;
+            if (_rateLimitStore.count > SAFEX_CONFIG.rateLimitMax) {
+                alert('⚠️ Too many submissions. Please wait a moment before trying again.');
+                return false;
+            }
+            return true;
+        }
+
+        // 🔒 SAFE TEXT ESCAPE for dynamic HTML insertion (prevents XSS)
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // 📅 LIVE DATE DISPLAY - Auto-updates every minute
+        function updateDateDisplay() {
+            const now = new Date();
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-IN', options);
+            document.getElementById('dateText').textContent = dateStr;
+        }
+        updateDateDisplay();
+        setInterval(updateDateDisplay, 60000);
+
+        // ============================================================
+        // 🚀 SUPABASE DATA-FETCHING FUNCTIONS FOR ALL STATIC SECTIONS
+        // ============================================================
+
+        // 📋 1. VIEW LOGGED REPORTS - Fetch from safety_reports table
+        async 

@@ -1,0 +1,11 @@
+Occurrence 1 at pos 192639
+Context: tElementById('officerPass').value;
+            if(officerAccounts[user] && officerAccounts[user] == pass) {
+                curren
+---
+Occurrence 2 at pos 192664
+Context: ').value;
+            if(officerAccounts[user] && officerAccounts[user] == pass) {
+                currentAuthenticatedPlant = pla
+---
+Total: 2

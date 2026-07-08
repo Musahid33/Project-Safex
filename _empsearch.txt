@@ -1,0 +1,6 @@
+2116:         function openOfficerModal() { document.getElementById('officerModal').classList.remove('hidden'); if(!currentAuthenticatedPlant) logoutOfficer(); }
+2117:         function closeOfficerModal() { document.getElementById('officerModal').classList.add('hidden'); }
+2119:             const plant = document.getElementById('officerPlant').value;
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {

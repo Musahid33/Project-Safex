@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safex - EMVEESS INFRAVENTURES PVT.LTD</title>
+    <!-- Tailwind CSS For Modern Designing -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Lucide Icons for Clean Look -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS Client Module Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .custom-scroll::-webkit-scrollbar { display: none; }
+        @keyframes pulse-red {
+            0%, 100% { background-color: #ef4444; }
+            50% { background-color: #991b1b; }
+        }
+        .emergency-blink { animation: pulse-red 2s infinite; }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .gallery-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .gallery-scroll-inner {
+            display: flex;
+            gap: 1rem;
+            animation: scroll-left 30s linear infinite;
+        }
+        .gallery-scroll-inner:hover {
+            animation-play-state: paused;
+        }
+        .gallery-card {
+            min-width: 200px;
+            flex-shrink: 0;
+        }
+
+        /* ===== THEME SYSTEM ===== */
+        :root {
+            --theme-bg: #f8fafc;
+            --theme-surface: #ffffff;
+            --theme-border: #e2e8f0;
+            --theme-text: #1e293b;
+            --theme-text-secondary: #64748b;
+            --theme-header-bg: #0f172a;
+            --theme-header-text: #ffffff;
+            --theme-footer-bg: #0f172a;
+            --theme-footer-text: #94a3b8;
+            --theme-card-bg: #ffffff;
+            --theme-accent: #10b981;
+            --theme-accent-hover: #059669;
+            --theme-m

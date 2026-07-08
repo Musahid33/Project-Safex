@@ -1,0 +1,100 @@
+2023:                 document.getElementById('timeToday').innerText = "Today";
+2024:                 document.getElementById('noticeHolidayTitle').innerText = "Independence Day Holiday Notice";
+2025:                 document.getElementById('noticeHolidaySub').innerText = "Shift C operations will remain closed...";
+2026:                 
+2027:                 document.getElementById('libraryTitle').innerText = "Document Vault / Library";
+2028:                 document.getElementById('vaultSopText').innerText = "SOP";
+2029:                 document.getElementById('vaultJhaText').innerText = "JHA";
+2030:                 document.getElementById('vaultRcrmText').innerText = "RCRM/HIRA";
+2031:                 document.getElementById('vaultMsdsText').innerText = "MSDS";
+2032:                 document.getElementById('vaultTpiText').innerText = "TPI Certs";
+2033:                 document.getElementById('vaultEmergencyText').innerText = "Emergency";
+2034:                 document.getElementById('vaultPoliciesText').innerText = "Policies";
+2035:                 document.getElementById('vaultRewardsText').innerText = "Rewards";
+2036:                 document.getElementById('vaultConsequenceText').innerText = "Consequences";
+2037:                 
+2038:                 // 📊 Dashboard Translations (EN)
+2039:                 document.getElementById('dashboardModalTitle').innerText = "📊 Safety Dashboard";
+2040:                 document.getElementById('dashboardSelectTitle').innerText = "Select Plant";
+2041:                 document.getElementById('dashboardSelectSub').innerText = "Choose a plant to view its safety dashboard";
+2042:                 document.getElementById('dashboardMonthLabel').innerText = "June 2026 • Monthly Summary";
+2043:                 document.getElementById('metricNearMissLabel').innerText = "Near Miss";
+2044:                 document.getElementById('metricLtiLabel').innerText = "LTI";
+2045:                 document.getElementById('metricFacLabel').innerText = "FAC";
+2046:                 document.getElementById('metricFatalLabel').innerText = "FATAL";
+2047:                 document.getElementById('metricLineWalkLabel').innerText = "Line Walk";
+2048:                 document.getElementById('metricAuditsLabel').innerText = "Audits";
+2049:                 document.getElementById('metricTrainingLabel').innerText = "Training";
+2050:                 document.getElementById('metricUcLabel').innerText = "UC";
+2051:                 document.getElementById('metricUaLabel').innerText = "UA";
+2052:                 document.getElementById('metricRewardLabel').innerText = "Reward";
+2053:                 document.getElementById('metricConsequenceLabel').innerText = "Consequence";
+2054:                 document.getElementById('metricEventsLabel').innerText = "Events";
+2055:                 document.getElementById('chartTitle').innerText = "Monthly Trend";
+2056:                 document.getElementById('chartPeriod').innerText = "Jan - Jun 2026";
+2057:                 document.getElementById('chartLegendIncidents').innerText = "Incidents";
+2058:                 document.getElementById('chartLegendSafe').innerText = "Safe Obs.";
+2059:                 document.getElementById('chartLegendActive').innerText = "Active Month";
+2060:                 document.getElementById('laggingTitle').innerText = "🔴 Lagging Indicators";
+2061:                 document.getElementById('laggingSub').innerText = "Reactive";
+2062:                 document.getElementById('leadingTitle').innerText = "🟢 Leading Indicators";
+2063:                 document.getElementById('leadingSub').innerText = "Proactive";
+2064:                 
+2065:                 // 🚨 Safety Alerts Translations (EN)
+2066:                 document.getElementById('safetyAlertsModalTitle').innerText = "🚨 Safety Alerts";
+2067:                 document.getElementById('alertCatLtiTitle').innerText = "LTI at TSL";
+2068:                 document.getElementById('alertCatLtiSub').innerText = "Lost Time Incidents at TSL Group Plants";
+2069:                 document.getElementById('alertCatFatalTitle').innerText = "FATAL at TSL";
+2070:                 document.getElementById('alertCatFatalSub').innerText = "Fatal Incidents at TSL Group Plants";
+2071:                 document.getElementById('alertCatGlobalTitle').innerText = "Global (Not TSL)";
+2072:                 document.getElementById('alertCatGlobalSub').innerText = "Major Incidents Worldwide for Learning";
+2073:                 document.getElementById('alertCatEmpTitle').innerText = "Safety Alert for Employee";
+2074:                 document.getElementById('alertCatEmpSub').innerText = "Personal Safety Alerts & Advisories";
+2075:                 document.getElementById('alertBackBtn').innerText = "Back";
+2076:                 
+2077:                 document.getElementById('fameTitle').innerText = "WALL OF FAME";
+2078:                 document.getElementById('fameSub').innerText = "Fabrication Team — Jamshedpur";
+2079:                 
+2080:                 document.getElementById('galleryTitle').innerText = "📸 Event Gallery";
+2081:                 document.getElementById('gallerySub').innerText = "Scrolling";
+2082:                 document.getElementById('footerAddr').innerText = "Tata Steel JSR, Jamshedpur, Jharkhand, India";
+2083:                 
+2084:                 document.getElementById('langBtn').innerText = "A/अ";
+2085:                 currentLang = 'EN';
+2086:             }
+2087:             lucide.createIcons(); // Re-render vector icons after text swap
+2088:         }
+2089: 
+2090:         // PRESERVED PIPELINE CORE ARCHITECTURE (PUBLIC / ENCRYPTED QUERY ENGINES)
+2091:         function toggleReportsLog() {
+2092:             const section = document.getElementById('reportsLogSection');
+2093:             const arrow = document.getElementById('arrowIcon');
+2094:             if(section.classList.contains('hidden')) { section.classList.remove('hidden'); arrow.classList.add('rotate-180'); }
+2095:             else { section.classList.add('hidden'); arrow.classList.remove('rotate-180'); }
+2096:         }
+2097:         function openPublicSearchModal() { document.getElementById('publicSearchModal').classList.remove('hidden'); document.getElementById('publicResultBox').classList.add('hidden'); }
+2098:         function closePublicSearchModal() { document.getElementById('publicSearchModal').classList.add('hidden'); }
+2099:         async function executePublicLiveSearch() {
+2100:             const selectedPlant = document.getElementById('publicSearchPlant').value;
+2101:             const searchId = document.getElementById('publicSearchEmpId').value.trim().toUpperCase();
+2102:             const resultBox = document.getElementById('publicResultBox');
+2103:             if(!searchId) return;
+2104:             resultBox.classList.remove('hidden');
+2105:             try {
+2106:                 const { data } = await _supabase.from('employee_profiles').select('*').eq('employee_id', searchId);
+2107:                 if(data && data[0] && data[0].active_plant_id === selectedPlant) {
+2108:                     resultBox.className = "rounded-xl p-3 bg-emerald-50 border border-emerald-200 text-slate-700 text-left space-y-1";
+2109:                     resultBox.innerHTML = `✅ <strong>${data[0].full_name}</strong><br>Blood Group: ${data[0].blood_group}<br>Medical Status: ${data[0].medical_fitness_status}`;
+2110:                 } else {
+2111:                     resultBox.className = "rounded-xl p-3 bg-rose-50 border border-rose-200 text-rose-700 text-left";
+2112:                     resultBox.innerHTML = `🛑 Access Lock: Verification Mis-match.`;
+2113:                 }
+2114:             } catch(e) { alert(e.message); }
+2115:         }
+2116:         function openOfficerModal() { document.getElementById('officerModal').classList.remove('hidden'); if(!currentAuthenticatedPlant) logoutOfficer(); }
+2117:         function closeOfficerModal() { document.getElementById('officerModal').classList.add('hidden'); }
+2118:         function validateOfficerLogin() {
+2119:             const plant = document.getElementById('officerPlant').value;
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {

@@ -1,0 +1,80 @@
+1496:         const supabaseUrl = 'https://duyvrtunxqaawgytkxhv.supabase.co';
+1497:         const supabaseKey = 'sb_publishable_Zlek_bcKAv11vgZMvohs9Q_r0huogOg';
+1498:         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+1499:         lucide.createIcons();
+1500: 
+1501:         // 🧠 LIVE DIRECTORY LOOKUP FOR WORKERS (AUTO-FILL)
+1502:         async function triggerLiveNameLookup(nameValue) {
+1503:             const statusSpan = document.getElementById('lookupStatus');
+1504:             const empIdInput = document.getElementById('reportEmpId');
+1505:             const desInput = document.getElementById('reportDesignation');
+1506:             
+1507:             if (nameValue.trim().length < 3) { 
+1508:                 statusSpan.innerText = ""; empIdInput.value = ""; desInput.value = ""; return; 
+1509:             }
+1510:             
+1511:             statusSpan.innerText = "🔍 खोज रहे हैं...";
+1512:             statusSpan.className = "text-[9px] text-amber-500 mt-0.5 block";
+1513:             
+1514:             try {
+1515:                 const { data } = await _supabase.from('employee_profiles').select('*').ilike('full_name', `%${nameValue.trim()}%`);
+1516:                 if (data && data.length > 0) {
+1517:                     statusSpan.innerText = "✅ मिल गया!"; 
+1518:                     statusSpan.className = "text-[9px] text-emerald-600 mt-0.5 block";
+1519:                     empIdInput.value = data[0].employee_id || "N/A"; 
+1520:                     desInput.value = data[0].designation || "Field Specialist";
+1521:                 } else { 
+1522:                     statusSpan.innerText = "❌ नहीं मिला।"; 
+1523:                     statusSpan.className = "text-[9px] text-rose-500 mt-0.5 block"; 
+1524:                     empIdInput.value = ""; desInput.value = ""; 
+1525:                 }
+1526:             } catch (err) { 
+1527:                 console.error("❌ Lookup Error:", err);
+1528:                 statusSpan.innerText = "❌ Search failed";
+1529:                 statusSpan.className = "text-[9px] text-rose-500 mt-0.5 block";
+1530:             }
+1531:         }
+1532: 
+1533:         // 🚨 EMERGENCY DIAL ROUTER
+1534:         function openEmergencyModal() {
+1535:             const confirmCall = confirm("🚨 SAFEX EMERGENCY HELPLINE\n\nNumber: +91 9177785011\n\nDo you want to dial this emergency line right now?");
+1536:             if (confirmCall) window.location.href = "tel:+919177785011";
+1537:         }
+1538: 
+1539:         // 📜 ALL POLICY MODAL CONTROLLER
+1540:         function openAllPolicyModal() {
+1541:             document.getElementById('allPolicyModal').classList.remove('hidden');
+1542:             lucide.createIcons();
+1543:         }
+1544:         function closeAllPolicyModal() {
+1545:             document.getElementById('allPolicyModal').classList.add('hidden');
+1546:         }
+1547: 
+1548:         // 🚨 EMERGENCY PREPAREDNESS MODAL CONTROLLER
+1549:         function openEmergencyPrepModal() {
+1550:             document.getElementById('emergencyPrepModal').classList.remove('hidden');
+1551:             lucide.createIcons();
+1552:         }
+1553:         function closeEmergencyPrepModal() {
+1554:             document.getElementById('emergencyPrepModal').classList.add('hidden');
+1555:         }
+1556: 
+1557:         // 🔑 FORGOT USERNAME / PASSWORD HELPERS
+1558:         function forgotUsername() {
+1559:             alert("🔑 Forgot Username?\n\nPlease contact your Safety Administrator or HR department to retrieve your username.\n\n📧 Email: scm@emvs.in\n📞 Contact: +91 9177785011");
+1560:         }
+1561:         function forgotPassword() {
+1562:             alert("🔒 Forgot Password?\n\nPlease contact your Safety Administrator to reset your password.\n\n📧 Email: scm@emvs.in\n📞 Contact: +91 9177785011");
+1563:         }
+1564: 
+1565:         // 📊 SAFETY DASHBOARD CONTROLLER
+1566:         let selectedDashboardPlant = '';
+1567:         let dashboardCurrentMonth = 5; // 0=Jan, 5=Jun
+1568:         const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+1569:         
+1570:         // All plants monthly data (12 metrics per month)
+1571:         const allPlantMonthlyData = {
+1572:             'TSL-Kalinganagar': [
+1573:                 { nearMiss: 8, lti: 0, fac: 1, fatal: 0, lineWalk: 32, audits: 3, training: 2, uc: 5, ua: 3, reward: 1, consequence: 0, events: 4 },
+1574:                 { nearMiss: 12, lti: 0, fac: 2, fatal: 0, lineWalk: 40, audits: 4, training: 3, uc: 7, ua: 4, reward: 2, consequence: 1, events: 5 },
+1575:                 { nearMiss: 6, lti: 0, fac: 0, fatal: 0, lineWalk: 28, audits: 2, training: 1, uc: 4, ua: 2, reward: 1, consequence: 0, events: 3 },

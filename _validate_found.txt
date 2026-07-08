@@ -1,0 +1,52 @@
+Line: 2118
+2118:         function validateOfficerLogin() {
+2119:             const plant = document.getElementById('officerPlant').value;
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {
+2123:                 currentAuthenticatedPlant = plant;
+2124:                 document.getElementById('loginFormFrame').classList.add('hidden');
+2125:                 document.getElementById('searchInterfaceFrame').classList.remove('hidden');
+2126:                 document.getElementById('activeStationBadge').innerText = plant;
+2127:             } else { alert("Invalid Credentials!"); }
+2128:         }
+2129:         function logoutOfficer() { currentAuthenticatedPlant = ""; document.getElementById('loginFormFrame').classList.remove('hidden'); document.getElementById('searchInterfaceFrame').classList.add('hidden'); }
+2130:         async function executeLiveSearch() { /* Officer query script */ }
+2131:         function openAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.remove('hidden'); }
+2132:         function closeAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.add('hidden'); }
+2133:         function selectAccidentType(type) { closeAccidentSelectModal(); openReportingForm(type); }
+2134:         
+2135:         function openObservationSelectModal() { document.getElementById('observationSelectModal').classList.remove('hidden'); }
+2136:         function closeObservationSelectModal() { document.getElementById('observationSelectModal').classList.add('hidden'); }
+2137:         function selectObservationType(type) { closeObservationSelectModal(); openReportingForm(type); }
+2138:         
+2139:         function openFeedbackSelectModal() { document.getElementById('feedbackSelectModal').classList.remove('hidden'); }
+2140:         function closeFeedbackSelectModal() { document.getElementById('feedbackSelectModal').classList.add('hidden'); }
+2141:         function selectFeedbackType(type) { closeFeedbackSelectModal(); openReportingForm(type); }
+2142:         
+2143:         function openGrievanceSelectModal() { document.getElementById('grievanceSelectModal').classList.remove('hidden'); }
+2144:         function closeGrievanceSelectModal() { document.getElementById('grievanceSelectModal').classList.add('hidden'); }
+2145:         function selectGrievanceType(type) { closeGrievanceSelectModal(); openReportingForm('Grievance - ' + type); }
+2146:         
+2147:         function openSuggestionSelectModal() { document.getElementById('suggestionSelectModal').classList.remove('hidden'); }
+2148:         function closeSuggestionSelectModal() { document.getElementById('suggestionSelectModal').classList.add('hidden'); }
+2149:         function selectSuggestionType(type) { closeSuggestionSelectModal(); openReportingForm(type); }
+2150:         
+2151:         function openReportingForm(type) { 
+2152:             activeReportType = type; 
+2153:             document.getElementById('modalFormTitle').innerText = "Log " + type; 
+2154:             document.getElementById('reportingModal').classList.remove('hidden');
+2155:             
+2156:             // Set current date and time
+2157:             const now = new Date();
+2158:             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+2159:             const reportDateTime = document.getElementById('reportDateTime');
+2160:             reportDateTime.value = now.toISOString().slice(0, 16);
+2161:             
+2162:             // Get form containers
+2163:             const locationContainer = document.getElementById('locationContainer');
+2164:             const deptContainer = document.getElementById('deptContainer');
+2165:             const severityContainer = document.getElementById('severityContainer');
+2166:             const descLabel = document.getElementById('descLabel');
+2167:             const reportLocation = document.getElementById('reportLocation');
+2168:             const reportDept = document.getElementById('reportDept');

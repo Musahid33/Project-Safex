@@ -1,0 +1,20 @@
+value.trim();
+            const pass = document.getElementById('officerPass').value;
+            if(officerAccounts[user] && officerAccounts[user] == pass) {
+                currentAuthenticatedPlant = plant;
+                document.getElementById('loginFormFrame').classList.add('hidden');
+                document.getElementById('searchInterfaceFrame').classList.remove('hidden');
+                document.getElementById('activeStationBadge').innerText = plant;
+            } else { alert("Invalid Credentials!"); }
+        }
+        function logoutOfficer() { currentAuthenticatedPlant = ""; document.getElementById('loginFormFrame').classList.remove('hidden'); document.getElementById('searchInterfaceFrame').classList.add('hidden'); }
+        async function executeLiveSearch() { /* Officer query script */ }
+        function openAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.remove('hidden'); }
+        function closeAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.add('hidden'); }
+        function selectAccidentType(type) { closeAccidentSelectModal(); openReportingForm(type); }
+        
+        function openObservationSelectModal() { document.getElementById('observationSelectModal').classList.remove('hidden'); }
+        function closeObservationSelectModal() { document.getElementById('observationSelectModal').classList.add('hidden'); }
+        function selectObservationType(type) { closeObservationSelectModal(); openReportingForm(type); }
+        
+        function openFeedbackSelectModal() { document.getElementByI

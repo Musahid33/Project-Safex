@@ -1,0 +1,43 @@
+rModal').classList.add('hidden'); }
+        async function validateOfficerLogin() {
+            const plant = document.getElementById('officerPlant').value;
+            const user = document.getElementById('officerUser').value.trim();
+            const pass = document.getElementById('officerPass').value;
+            
+            if (!user || !pass || !plant) {
+                alert("Please fill all fields: User ID, Password, and Plant.");
+                return;
+            }
+            
+            try {
+                // 🔍 Check vault_officers table in Supabase first
+                const { data, error } = await _supabase
+                    .from('vault_officers')
+                    .select('*')
+                    .eq('user_id', user)
+                    .eq('password', pass)
+                    .eq('plant', plant);
+                
+                if (error) {
+                    console.error("Supabase query error:", error);
+                    // Fallback to hardcoded credentials if table doesn't exist
+                    const hardcodedAccounts = {
+                        'TSL-OFF-01': 'safex@2026',
+                        'TSL-OFF-02': 'safex@2026',
+                        'TSL-OFF-03': 'safex@2026'
+                    };
+                    if (hardcodedAccounts[user] && hardcodedAccounts[user] === pass) {
+                        currentAuthenticatedPlant = plant;
+                        document.getElementById('loginFormFrame').classList.add('hidden');
+                        document.getElementById('searchInterfaceFrame').classList.remove('hidden');
+                        document.getElementById('activeStationBadge').innerText = plant;
+                        return;
+                    }
+                    alert("Invalid Credentials!");
+                    return;
+                }
+                
+                if (data && data.length > 0) {
+                    // ✅ Login successful from vault_officers table
+                    currentAuthenticatedPlant = plant;
+                    document.ge

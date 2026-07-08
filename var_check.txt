@@ -1,0 +1,2 @@
+nction openOfficerModal() { document.getElementById('officerModal').classList.remove('hidden'); if(!currentAuthenticatedPlant) logoutOfficer(); }
+        function closeOfficerModal() { document.getEle

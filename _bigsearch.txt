@@ -1,0 +1,200 @@
+1923:                 document.getElementById('vaultJhaText').innerText = "जेएचए";
+1924:                 document.getElementById('vaultRcrmText').innerText = "आरसीआरएम/हीरा";
+1925:                 document.getElementById('vaultMsdsText').innerText = "एमएसडीएस";
+1926:                 document.getElementById('vaultTpiText').innerText = "टीपीआई प्रमाण";
+1927:                 document.getElementById('vaultEmergencyText').innerText = "आपातकाल";
+1928:                 document.getElementById('vaultPoliciesText').innerText = "नीतियां";
+1929:                 document.getElementById('vaultRewardsText').innerText = "पुरस्कार";
+1930:                 document.getElementById('vaultConsequenceText').innerText = "परिणाम";
+1931:                 
+1932:                 // 📊 Dashboard Translations (HI)
+1933:                 document.getElementById('dashboardModalTitle').innerText = "📊 सुरक्षा डैशबोर्ड";
+1934:                 document.getElementById('dashboardSelectTitle').innerText = "प्लांट चुनें";
+1935:                 document.getElementById('dashboardSelectSub').innerText = "डैशबोर्ड देखने के लिए प्लांट चुनें";
+1936:                 document.getElementById('dashboardMonthLabel').innerText = "जून 2026 • मासिक सारांश";
+1937:                 document.getElementById('metricNearMissLabel').innerText = "नियर मिस";
+1938:                 document.getElementById('metricLtiLabel').innerText = "LTI";
+1939:                 document.getElementById('metricFacLabel').innerText = "FAC";
+1940:                 document.getElementById('metricFatalLabel').innerText = "FATAL";
+1941:                 document.getElementById('metricLineWalkLabel').innerText = "लाइन वॉक";
+1942:                 document.getElementById('metricAuditsLabel').innerText = "ऑडिट";
+1943:                 document.getElementById('metricTrainingLabel').innerText = "प्रशिक्षण";
+1944:                 document.getElementById('metricUcLabel').innerText = "UC";
+1945:                 document.getElementById('metricUaLabel').innerText = "UA";
+1946:                 document.getElementById('metricRewardLabel').innerText = "पुरस्कार";
+1947:                 document.getElementById('metricConsequenceLabel').innerText = "परिणाम";
+1948:                 document.getElementById('metricEventsLabel').innerText = "ईवेंट";
+1949:                 document.getElementById('chartTitle').innerText = "मासिक रुझान";
+1950:                 document.getElementById('chartPeriod').innerText = "जनवरी - जून 2026";
+1951:                 document.getElementById('chartLegendIncidents').innerText = "घटनाएं";
+1952:                 document.getElementById('chartLegendSafe').innerText = "सुरक्षित अवलोकन";
+1953:                 document.getElementById('chartLegendActive').innerText = "सक्रिय माह";
+1954:                 document.getElementById('laggingTitle').innerText = "🔴 लैगिंग इंडिकेटर्स";
+1955:                 document.getElementById('laggingSub').innerText = "प्रतिक्रियात्मक";
+1956:                 document.getElementById('leadingTitle').innerText = "🟢 लीडिंग इंडिकेटर्स";
+1957:                 document.getElementById('leadingSub').innerText = "सक्रिय";
+1958:                 
+1959:                 // 🚨 Safety Alerts Translations (HI)
+1960:                 document.getElementById('safetyAlertsModalTitle').innerText = "🚨 सुरक्षा अलर्ट";
+1961:                 document.getElementById('alertCatLtiTitle').innerText = "TSL में LTI";
+1962:                 document.getElementById('alertCatLtiSub').innerText = "TSL ग्रुप प्लांट्स में LTI घटनाएं";
+1963:                 document.getElementById('alertCatFatalTitle').innerText = "TSL में दुर्घटना मृत्यु";
+1964:                 document.getElementById('alertCatFatalSub').innerText = "TSL ग्रुप प्लांट्स में घातक घटनाएं";
+1965:                 document.getElementById('alertCatGlobalTitle').innerText = "वैश्विक (TSL नहीं)";
+1966:                 document.getElementById('alertCatGlobalSub').innerText = "सीखने के लिए दुनिया भर की प्रमुख घटनाएं";
+1967:                 document.getElementById('alertCatEmpTitle').innerText = "कर्मचारी के लिए सुरक्षा अलर्ट";
+1968:                 document.getElementById('alertCatEmpSub').innerText = "व्यक्तिगत सुरक्षा अलर्ट और सलाह";
+1969:                 document.getElementById('alertBackBtn').innerText = "वापस";
+1970:                 
+1971:                 document.getElementById('fameTitle').innerText = "प्रशंसा की दीवार";
+1972:                 document.getElementById('fameSub').innerText = "फैब्रिकेशन टीम — जमशेदपुर";
+1973:                 
+1974:                 document.getElementById('galleryTitle').innerText = "📸 इवेंट गैलरी";
+1975:                 document.getElementById('gallerySub').innerText = "स्क्रॉल हो रहा है";
+1976:                 document.getElementById('footerAddr').innerText = "टाटा स्टील जेएसआर, जमशेदपुर, झारखंड, भारत";
+1977:                 
+1978:                 document.getElementById('langBtn').innerText = "English";
+1979:                 currentLang = 'HI';
+1980:             } else {
+1981:                 document.getElementById('companyName').innerText = "ABC COMPANY";
+1982:                 document.getElementById('btnPublicSearch').innerHTML = '<i data-lucide="search" class="w-3.5 h-3.5"></i> Search Employee Profile';
+1983:                 document.getElementById('btnOfficerSearch').innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i> Safety Officer';
+1984:                 document.getElementById('incidentDaysTitle').innerText = "Incident Free Days";
+1985:                 document.getElementById('daysLabel').innerText = "Days";
+1986:                 document.getElementById('safetyQuote').innerText = `"सुरक्षा से समझौता, दुर्घटना को न्योता। Always wear your PPE!"`;
+1987:                 
+1988:                 document.getElementById('emergencyTitle').innerText = "EMERGENCY NO";
+1989:                 document.getElementById('emergencySub').innerText = "Click to Dial";
+1990:                 document.getElementById('tslRulesTitle').innerText = "LIFE SAVING RULES";
+1991:                 document.getElementById('tslRulesSub').innerText = "10 Absolute Mandates";
+1992:                 
+1993:                 document.getElementById('sectionReporting').innerText = "Log Safety & Grievances";
+1994:                 document.getElementById('lblNearMiss').innerText = "Near Miss";
+1995:                 document.getElementById('lblHazard').innerText = "Hazard";
+1996:                 document.getElementById('lblObservation').innerText = "Observation";
+1997:                 document.getElementById('lblSpeakUp').innerText = "Speak Up";
+1998:                 document.getElementById('lblFeedback').innerText = "Feedback";
+1999:                 document.getElementById('lblGrievances').innerText = "Grievances";
+2000:                 document.getElementById('lblSuggestion').innerText = "Suggestion";
+2001:                 
+2002:                 document.getElementById('sectionHub').innerText = "Portals & Hubs";
+2003:                 document.getElementById('btnViewReports').innerText = "View Logged Reports";
+2004:                 document.getElementById('subViewReports').innerText = "Track Open/Closed Statuses";
+2005:                 document.getElementById('lblDashboard').innerText = "View Safety Dashboard";
+2006:                 document.getElementById('subDashboard').innerText = "Live Metric Charts & Analysis";
+2007:                 document.getElementById('lblTraining').innerText = "Training Management";
+2008:                 document.getElementById('subTraining').innerText = "Modules, Videos & Progress";
+2009:                 document.getElementById('trainingModalTitle').innerText = "🎓 Training Management Portal";
+2010:                 document.getElementById('trainingVideosTitle').innerText = "📺 Training Videos";
+2011:                 document.getElementById('trainingAssessmentTitle').innerText = "📋 Assessment";
+2012:                 document.getElementById('trainingFeedbackTitle').innerText = "💬 Training Feedback";
+2013:                 document.getElementById('lblAlerts').innerText = "Safety Alerts";
+2014:                 document.getElementById('subAlerts').innerText = "Recent Plant-Wide Broadcasts";
+2015:                 
+2016:                 document.getElementById('eventsTitle').innerText = "Upcoming Safety Events";
+2017:                 document.getElementById('eventMockDrillTitle').innerText = "Confined Space Mock Drill";
+2018:                 document.getElementById('eventMockDrillSub').innerText = "Time: 10:30 AM • Site-4 Blast Furnace Area";
+2019:                 
+2020:                 document.getElementById('noticesTitle').innerText = "Circulars & Notices";
+2021:                 document.getElementById('liveBoardBadge').innerText = "LIVE BOARD";
+2022:                 document.getElementById('badgeHoliday').innerText = "Holiday";
+2023:                 document.getElementById('timeToday').innerText = "Today";
+2024:                 document.getElementById('noticeHolidayTitle').innerText = "Independence Day Holiday Notice";
+2025:                 document.getElementById('noticeHolidaySub').innerText = "Shift C operations will remain closed...";
+2026:                 
+2027:                 document.getElementById('libraryTitle').innerText = "Document Vault / Library";
+2028:                 document.getElementById('vaultSopText').innerText = "SOP";
+2029:                 document.getElementById('vaultJhaText').innerText = "JHA";
+2030:                 document.getElementById('vaultRcrmText').innerText = "RCRM/HIRA";
+2031:                 document.getElementById('vaultMsdsText').innerText = "MSDS";
+2032:                 document.getElementById('vaultTpiText').innerText = "TPI Certs";
+2033:                 document.getElementById('vaultEmergencyText').innerText = "Emergency";
+2034:                 document.getElementById('vaultPoliciesText').innerText = "Policies";
+2035:                 document.getElementById('vaultRewardsText').innerText = "Rewards";
+2036:                 document.getElementById('vaultConsequenceText').innerText = "Consequences";
+2037:                 
+2038:                 // 📊 Dashboard Translations (EN)
+2039:                 document.getElementById('dashboardModalTitle').innerText = "📊 Safety Dashboard";
+2040:                 document.getElementById('dashboardSelectTitle').innerText = "Select Plant";
+2041:                 document.getElementById('dashboardSelectSub').innerText = "Choose a plant to view its safety dashboard";
+2042:                 document.getElementById('dashboardMonthLabel').innerText = "June 2026 • Monthly Summary";
+2043:                 document.getElementById('metricNearMissLabel').innerText = "Near Miss";
+2044:                 document.getElementById('metricLtiLabel').innerText = "LTI";
+2045:                 document.getElementById('metricFacLabel').innerText = "FAC";
+2046:                 document.getElementById('metricFatalLabel').innerText = "FATAL";
+2047:                 document.getElementById('metricLineWalkLabel').innerText = "Line Walk";
+2048:                 document.getElementById('metricAuditsLabel').innerText = "Audits";
+2049:                 document.getElementById('metricTrainingLabel').innerText = "Training";
+2050:                 document.getElementById('metricUcLabel').innerText = "UC";
+2051:                 document.getElementById('metricUaLabel').innerText = "UA";
+2052:                 document.getElementById('metricRewardLabel').innerText = "Reward";
+2053:                 document.getElementById('metricConsequenceLabel').innerText = "Consequence";
+2054:                 document.getElementById('metricEventsLabel').innerText = "Events";
+2055:                 document.getElementById('chartTitle').innerText = "Monthly Trend";
+2056:                 document.getElementById('chartPeriod').innerText = "Jan - Jun 2026";
+2057:                 document.getElementById('chartLegendIncidents').innerText = "Incidents";
+2058:                 document.getElementById('chartLegendSafe').innerText = "Safe Obs.";
+2059:                 document.getElementById('chartLegendActive').innerText = "Active Month";
+2060:                 document.getElementById('laggingTitle').innerText = "🔴 Lagging Indicators";
+2061:                 document.getElementById('laggingSub').innerText = "Reactive";
+2062:                 document.getElementById('leadingTitle').innerText = "🟢 Leading Indicators";
+2063:                 document.getElementById('leadingSub').innerText = "Proactive";
+2064:                 
+2065:                 // 🚨 Safety Alerts Translations (EN)
+2066:                 document.getElementById('safetyAlertsModalTitle').innerText = "🚨 Safety Alerts";
+2067:                 document.getElementById('alertCatLtiTitle').innerText = "LTI at TSL";
+2068:                 document.getElementById('alertCatLtiSub').innerText = "Lost Time Incidents at TSL Group Plants";
+2069:                 document.getElementById('alertCatFatalTitle').innerText = "FATAL at TSL";
+2070:                 document.getElementById('alertCatFatalSub').innerText = "Fatal Incidents at TSL Group Plants";
+2071:                 document.getElementById('alertCatGlobalTitle').innerText = "Global (Not TSL)";
+2072:                 document.getElementById('alertCatGlobalSub').innerText = "Major Incidents Worldwide for Learning";
+2073:                 document.getElementById('alertCatEmpTitle').innerText = "Safety Alert for Employee";
+2074:                 document.getElementById('alertCatEmpSub').innerText = "Personal Safety Alerts & Advisories";
+2075:                 document.getElementById('alertBackBtn').innerText = "Back";
+2076:                 
+2077:                 document.getElementById('fameTitle').innerText = "WALL OF FAME";
+2078:                 document.getElementById('fameSub').innerText = "Fabrication Team — Jamshedpur";
+2079:                 
+2080:                 document.getElementById('galleryTitle').innerText = "📸 Event Gallery";
+2081:                 document.getElementById('gallerySub').innerText = "Scrolling";
+2082:                 document.getElementById('footerAddr').innerText = "Tata Steel JSR, Jamshedpur, Jharkhand, India";
+2083:                 
+2084:                 document.getElementById('langBtn').innerText = "A/अ";
+2085:                 currentLang = 'EN';
+2086:             }
+2087:             lucide.createIcons(); // Re-render vector icons after text swap
+2088:         }
+2089: 
+2090:         // PRESERVED PIPELINE CORE ARCHITECTURE (PUBLIC / ENCRYPTED QUERY ENGINES)
+2091:         function toggleReportsLog() {
+2092:             const section = document.getElementById('reportsLogSection');
+2093:             const arrow = document.getElementById('arrowIcon');
+2094:             if(section.classList.contains('hidden')) { section.classList.remove('hidden'); arrow.classList.add('rotate-180'); }
+2095:             else { section.classList.add('hidden'); arrow.classList.remove('rotate-180'); }
+2096:         }
+2097:         function openPublicSearchModal() { document.getElementById('publicSearchModal').classList.remove('hidden'); document.getElementById('publicResultBox').classList.add('hidden'); }
+2098:         function closePublicSearchModal() { document.getElementById('publicSearchModal').classList.add('hidden'); }
+2099:         async function executePublicLiveSearch() {
+2100:             const selectedPlant = document.getElementById('publicSearchPlant').value;
+2101:             const searchId = document.getElementById('publicSearchEmpId').value.trim().toUpperCase();
+2102:             const resultBox = document.getElementById('publicResultBox');
+2103:             if(!searchId) return;
+2104:             resultBox.classList.remove('hidden');
+2105:             try {
+2106:                 const { data } = await _supabase.from('employee_profiles').select('*').eq('employee_id', searchId);
+2107:                 if(data && data[0] && data[0].active_plant_id === selectedPlant) {
+2108:                     resultBox.className = "rounded-xl p-3 bg-emerald-50 border border-emerald-200 text-slate-700 text-left space-y-1";
+2109:                     resultBox.innerHTML = `✅ <strong>${data[0].full_name}</strong><br>Blood Group: ${data[0].blood_group}<br>Medical Status: ${data[0].medical_fitness_status}`;
+2110:                 } else {
+2111:                     resultBox.className = "rounded-xl p-3 bg-rose-50 border border-rose-200 text-rose-700 text-left";
+2112:                     resultBox.innerHTML = `🛑 Access Lock: Verification Mis-match.`;
+2113:                 }
+2114:             } catch(e) { alert(e.message); }
+2115:         }
+2116:         function openOfficerModal() { document.getElementById('officerModal').classList.remove('hidden'); if(!currentAuthenticatedPlant) logoutOfficer(); }
+2117:         function closeOfficerModal() { document.getElementById('officerModal').classList.add('hidden'); }
+2118:         function validateOfficerLogin() {
+2119:             const plant = document.getElementById('officerPlant').value;
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {

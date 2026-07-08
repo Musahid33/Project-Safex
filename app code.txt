@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safex - ABC Company Mobile Portal</title>
+    <!-- Tailwind CSS For Modern Designing -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Lucide Icons for Clean Look -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS Client Module Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .custom-scroll::-webkit-scrollbar { display: none; }
+        @keyframes pulse-red {
+            0%, 100% { background-color: #ef4444; }
+            50% { background-color: #991b1b; }
+        }
+        .emergency-blink { animation: pulse-red 2s infinite; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased max-w-md mx-auto min-h-screen shadow-2xl border-x border-gray-200 flex flex-col relative">
+
+    <!-- HEADER SECTION -->
+    <header class="bg-slate-900 text-white sticky top-0 z-40 px-4 py-3 shadow-md">
+        <div class="flex items-center justify-between mb-2">
+            <div>
+                <span class="text-xs text-emerald-400 font-bold tracking-widest uppercase">Safex Portal</span>
+                <h1 class="text-lg font-extrabold tracking-tight" id="companyName">ABC COMPANY</h1>
+                <p class="text-[10px] text-slate-400 font-medium">Vendor Partner | Tata Steel JSR</p>
+            </div>
+            <!-- LANGUAGE TOGGLE BUTTON -->
+            <button onclick="toggleLanguage()" class="flex items-center gap-1 bg-slate-800 text-xs px-2 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700 transition">
+                <i data-lucide="globe" class="w-4 h-4 text-emerald-400"></i>
+                <span id="langBtn">A/अ</span>
+            </button>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-800">
+            <button onclick="openPublicSearchModal()" class="flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold py-2 px-1 rounded-md transition shadow-sm" id="btnPublicSearch">
+                <i data-lucide="search" class="w-3.5 h-3.5"></i> Search Employee Profile
+            </button>
+            <button onclick="openOfficerModal()" class="flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-bold py-2 px-1 rounded-md border border-slate-700 transition shadow-sm" id="btnOfficerSearch">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i> Safety Officer
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="p-4 flex-1 space-y-5 custom-scroll overflow-y-auto bg-slate-50">
+
+        <!-- 🎯 INCIDENT-FREE DAYS COUNTER -->
+        <div class="bg-white border border-gray-200 rounded-xl p-3.5 shadow-sm flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-200 flex flex-col items-center justify-center text-emerald-600 shadow-inner">
+                    <span class="text-lg font-black leading-none">184</span>
+                    <span class="text-[7px] font-black uppercase tracking-wider text-emerald-700" id="daysLabel">Days</span>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide" id="incidentDaysTitle">Incident Free Days</h4>
+                    <p class="text-[11px] text-slate-600 font-medium italic mt-0.5" id="safetyQuote">"सुरक्षा से समझौता, दुर्घटना को न्योता। Always wear your PPE!"</p>
+                </div>
+            </div>
+            <i data-lucide="shield" class="w-5 h-5 text-emerald-500 shrink-0"></i>
+        </div>
+
+        <!-- 🚨 EMERGENCY & TSL RULES -->
+        <div class="grid grid-cols-2 gap-3">
+            <div onclick="openEmergencyModal()" class="emergency-blink text-white p-3.5 rounded-xl shadow-lg cursor-pointer transform active:scale-95 transition flex flex-col justify-between min-h-[90px]">
+                <div class="flex justify-between items-start">
+                    <i data-lucide="phone-call" class="w-6 h-6"></i>
+                    <span class="bg-white/20 text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">SOS</span>
+                </div>
+                <div>
+                    <h3 class="font-black text-sm tracking-wide" id="emergencyTitle">EMERGENCY NO</h3>
+                    <p class="text-[10px] text-red-100 opacity-90" id="emergencySub">Click to Dial</p>
+                </div>
+            </div>
+
+            <div onclick="openTslRules()" class="bg-gradient-to-br from-blue-700 to-indigo-900 text-white p-3.5 rounded-xl shadow-lg cursor-pointer transform active:scale-95 transition flex flex-col justify-between min-h-[90px]">
+                <div class="flex justify-between items-start">
+                    <i data-lucide="award" class="w-6 h-6 text-amber-400"></i>
+                    <span class="bg-blue-600 text-[10px] px-1.5 py-0.5 rounded-full font-bold">TSL</span>
+                </div>
+                <div>
+                    <h3 class="font-black text-sm tracking-wide" id="tslRulesTitle">LIFE SAVING RULES</h3>
+                    <p class="text-[10px] text-blue-100 opacity-90" id="tslRulesSub">10 Absolute Mandates</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📝 LOG SAFETY & GRIEVANCES GRID -->
+        <div>
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" id="sectionReporting">Log Safety & Grievances</h2>
+            <div class="grid grid-cols-2 gap-2.5">
+                <button onclick="openReportingForm('Near Miss')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-amber-50 rounded-lg text-amber-600 mb-1.5"><i data-lucide="alert-triangle" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblNearMiss">Near Miss</span>
+                </button>
+                <button onclick="openReportingForm('Hazard')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-red-50 rounded-lg text-red-600 mb-1.5"><i data-lucide="flame" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblHazard">Hazard</span>
+                </button>
+                <button onclick="openReportingForm('UC / UA')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-orange-50 rounded-lg text-orange-600 mb-1.5"><i data-lucide="user-x" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblUcua">UC / UA</span>
+                </button>
+                <button onclick="openReportingForm('Safety Observation')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600 mb-1.5"><i data-lucide="eye" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblObservation">Observation</span>
+                </button>
+                <button onclick="openAccidentSelectModal()" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-rose-100 rounded-lg text-rose-900 mb-1.5"><i data-lucide="skull" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblAccident">Accident</span>
+                </button>
+                <button onclick="openReportingForm('Feedback')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600 mb-1.5"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblFeedback">Feedback</span>
+                </button>
+                <button onclick="openReportingForm('Grievance')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-purple-50 rounded-lg text-purple-600 mb-1.5"><i data-lucide="frown" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblGrievances">Grievances</span>
+                </button>
+                <button onclick="openReportingForm('Suggestion')" class="flex flex-col items-center justify-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-slate-50 transition shadow-sm active:scale-95">
+                    <div class="p-2 bg-sky-50 rounded-lg text-sky-600 mb-1.5"><i data-lucide="lightbulb" class="w-5 h-5"></i></div>
+                    <span class="text-xs font-bold text-slate-700" id="lblSuggestion">Suggestion</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 🔗 PORTALS & HUBS -->
+        <div class="space-y-2.5">
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1" id="sectionHub">Portals & Hubs</h2>
+            
+            <div onclick="toggleReportsLog()" class="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl shadow-md cursor-pointer hover:opacity-95 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-white/10 rounded-lg"><i data-lucide="folder-search" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-black tracking-wide" id="btnViewReports">View Logged Reports</h4>
+                        <p class="text-[10px] text-emerald-100 opacity-90" id="subViewReports">Track Open/Closed Statuses</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-down" id="arrowIcon" class="w-5 h-5 text-white transition-transform duration-300"></i>
+            </div>
+
+            <!-- COLLAPSIBLE LOG TABLE -->
+            <div id="reportsLogSection" class="hidden bg-white border border-gray-200 rounded-xl p-3 shadow-inner space-y-2 transition-all">
+                <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-1.5 border-b border-gray-100">
+                    <span id="logHeaderType">Type & ID</span> <span id="logHeaderStatus">Status</span>
+                </div>
+                <div class="flex justify-between items-center py-1.5 text-xs">
+                    <div>
+                        <span class="font-bold text-slate-800 block">⚠️ Near Miss</span>
+                        <span class="text-[9px] text-slate-400">ID: #NM-9482 • 05 Jul</span>
+                    </div>
+                    <span class="bg-red-50 text-red-600 text-[9px] font-black px-2 py-0.5 rounded border border-red-200 uppercase">Open</span>
+                </div>
+            </div>
+
+            <div onclick="alert('Opening Safety Dashboard')" class="flex items-center justify-between p-4 bg-slate-900 text-white rounded-xl shadow-sm cursor-pointer hover:bg-slate-800 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-slate-800 rounded-lg text-emerald-400"><i data-lucide="layout-dashboard" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold" id="lblDashboard">View Safety Dashboard</h4>
+                        <p class="text-[10px] text-slate-400" id="subDashboard">Live Metric Charts & Analysis</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i>
+            </div>
+
+            <div onclick="alert('Opening Training Management')" class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800" id="lblTraining">Training Management</h4>
+                        <p class="text-[10px] text-slate-500" id="subTraining">Modules, Videos & Progress</p>
+                    </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i>
+            </div>
+
+            <div onclick="alert('Opening Safety Alerts')" class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-rose-50 rounded-lg text-rose-600"><i data-lucide="bell" class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800" id="lblAlerts">Safety Alerts</h4>
+                        <p class="text-[10px] text-slate-500" id="subAlerts">Recent Plant-Wide Broadcasts</p>
+                    </div>
+                </div>
+                <span class="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full">3 NEW</span>
+            </div>
+        </div>
+
+        <!-- 📅 UPCOMING EVENTS SECTION -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
+                <i data-lucide="calendar-days" class="w-5 h-5 text-indigo-600"></i>
+                <h3 class="font-extrabold text-sm text-slate-800" id="eventsTitle">Upcoming Safety Events</h3>
+            </div>
+            <div class="space-y-2.5">
+                <div class="flex items-start gap-3 p-2 rounded-lg bg-indigo-50/50 border border-indigo-100">
+                    <div class="bg-indigo-600 text-white text-center rounded px-2 py-1 font-black text-xs shrink-0">
+                        10 <span class="block text-[8px] font-medium uppercase">Jul</span>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-800" id="eventMockDrillTitle">Confined Space Mock Drill</h4>
+                        <p class="text-[10px] text-slate-500" id="eventMockDrillSub">Time: 10:30 AM • Site-4 Blast Furnace Area</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📢 CIRCULARS & NOTICES SECTION -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="megaphone" class="w-5 h-5 text-rose-500"></i>
+                    <h3 class="font-extrabold text-sm text-slate-800" id="noticesTitle">Circulars & Notices</h3>
+                </div>
+                <span class="bg-rose-100 text-rose-700 text-[9px] font-black px-1.5 py-0.5 rounded" id="liveBoardBadge">LIVE BOARD</span>
+            </div>
+            <div class="space-y-3">
+                <div onclick="alert('Independence Day Notice')" class="p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl cursor-pointer hover:bg-amber-50 transition">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[9px] bg-amber-200 text-amber-800 font-black px-1.5 py-0.5 rounded uppercase" id="badgeHoliday">Holiday</span>
+                        <span class="text-[9px] text-slate-400 font-medium" id="timeToday">Today</span>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-800 leading-tight" id="noticeHolidayTitle">Independence Day Holiday Notice</h4>
+                    <p class="text-[10px] text-slate-500 mt-0.5 line-clamp-1" id="noticeHolidaySub">Shift C operations will remain closed...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📚 DOCUMENT VAULT / COMPREHENSIVE LIBRARY (ALL NEW CONSTRUCTORS LOADED) -->
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100">
+                <i data-lucide="folder-open" class="w-5 h-5 text-slate-700"></i>
+                <h3 class="font-extrabold text-sm text-slate-800" id="libraryTitle">Document Vault / Library</h3>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5">
+                <div onclick="alert('Opening SOP (Standard Operating Procedure) Vault')" class="flex items-center gap-2 p-2 bg-slate-50 border border-gray-100 rounded-lg hover:bg-slate-100 cursor-pointer transition text-xs font-bold text-slate-700" id="vaultSop">
+                    <i data-lucide="file-text" class="w-4 h-4 text-red-500 shrink-0"></i> SOP Standard
+                </div>
+                <div onclick="alert('Opening JHA (Job Hazard Analysis) Folders')" class="flex items-center gap-2 p-2 bg-slate-50 border border-gray-100 rounded-lg hover:bg-slate-100 cursor-pointer transition text-xs font-bold text-slate-700" id="vaultJha">
+                    <i data-lucide="shield-alert" class="w-4 h-4 text-blue-500 shrink-0"></i> JHA Folders
+                </div>
+                <div onclick="alert('Opening HIRA Manual registries')" class="flex items-center gap-2 p-2 bg-slate-50 border border-gray-100 rounded-lg hover:bg-slate-100 cursor-pointer transition text-xs font-bold text-slate-700" id="vaultHira">
+                    <i data-lucide="activity" class="w-4 h-4 text-amber-500 shrink-0"></i> HIRA Manuals
+                </div>
+                <div onclick="alert('Opening MSDS Chemical Safety Log Sheets')" class="flex items-center gap-2 p-2 bg-slate-50 border border-gray-100 rounded-lg hover:bg-slate-100 cursor-pointer transition text-xs font-bold text-slate-700" id="vaultMsds">
+                    <i data-lucide="droplet" class="w-4 h-4 text-purple-500 shrink-0"></i> MSDS Sheets
+                </div>
+                <div onclick="alert('Opening TPI Fitness clearance archives')" class="flex items-center gap-2 p-2 bg-slate-50 border border-gray-100 rounded-lg hover:bg-slate-100 cursor-pointer transition text-xs font-bold text-slate-700" id="vaultTpi">
+                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-500 shrink-0"></i> TPI Document
+                </div>
+                <div onclick="alert('Opening Master Company Policies Manual')" class="flex items-center gap-2 p-2 bg-slate-50 border border-gray-100 rounded-lg hover:bg-slate-100 cursor-pointer transition text-xs font-bold text-slate-700" id="vaultPolicies">
+                    <i data-lucide="book-open" class="w-4 h-4 text-indigo-500 shrink-0"></i> All Policies
+                </div>
+                <div onclick="alert('Opening Standard Safety Procedures Matrix')" class="col-span-2 flex items-center justify-center gap-2 p-2 bg-slate-900 border border-slate-800 text-white rounded-lg hover:bg-slate-800 cursor-pointer transition text-xs font-bold" id="vaultProcedures">
+                    <i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-400 shrink-0"></i> Safety Procedures
+                </div>
+            </div>
+        </div>
+
+        <!-- 🏆 WALL OF FAME SECTION -->
+        <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 rounded-xl p-4 text-white shadow-md relative overflow-hidden">
+            <div class="absolute right-0 bottom-0 opacity-10 translate-x-4 translate-y-4"><i data-lucide="crown" class="w-32 h-32"></i></div>
+            <div class="flex items-center gap-1 mb-1.5">
+                <i data-lucide="crown" class="w-4 h-4 text-yellow-200 fill-yellow-200"></i>
+                <h3 class="text-xs font-black uppercase tracking-widest text-yellow-100" id="fameTitle">WALL OF FAME</h3>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-full bg-white/20 border-2 border-white flex items-center justify-center overflow-hidden font-black text-lg shadow-inner">👷‍♂️</div>
+                <div>
+                    <h4 class="font-extrabold text-base leading-tight">Rajesh Kumar</h4>
+                    <p class="text-[10px] text-yellow-100 font-medium" id="fameSub">Fabrication Team — Jamshedpur</p>
+                </div>
+            </div>
+        </div>
+
+     </main>
+
+    <!-- FOOTER WITH LOCATION DETAILS -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 px-4 text-[10px] font-semibold border-t border-slate-800 mt-auto z-10">
+        <div class="text-slate-300 font-bold uppercase tracking-wider text-[11px] mb-1">ABC Company</div>
+        <div class="text-slate-500 font-medium mb-2.5" id="footerAddr">Tata Steel JSR, Jamshedpur, Jharkhand, India</div>
+        <div class="pt-2.5 border-t border-slate-800 text-slate-600 flex justify-between items-center">
+            <span>&copy; 2026 Powered by <span class="text-emerald-500 font-black">Safex</span></span>
+            <span class="text-[9px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">v2.9 Perfect Live</span>
+        </div>
+    </footer>
+
+    <!-- DYNAMIC PROFILE DIALOG MODALS -->
+    <div id="publicSearchModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-emerald-600 text-white px-4 py-3.5 flex justify-between items-center">
+                <h3 class="font-black text-sm uppercase tracking-wide">Search Worker Profile</h3>
+                <button onclick="closePublicSearchModal()" class="text-white font-bold">✕</button>
+            </div>
+            <div class="p-4 space-y-4">
+                <select id="publicSearchPlant" class="w-full text-xs border p-2.5 bg-gray-50 rounded-lg"><option value="TSL-Kalinganagar">TSL - Kalinganagar</option><option value="TSL-Jamshedpur">TSL - Jamshedpur</option></select>
+                <div class="flex gap-2"><input type="text" id="publicSearchEmpId" placeholder="E.g., TSL-EMP-101" class="w-full text-xs border rounded-lg p-2.5 font-bold uppercase"/><button onclick="executePublicLiveSearch()" class="bg-emerald-600 text-white font-bold text-xs px-4 rounded-lg">Search</button></div>
+                <div id="publicResultBox" class="hidden rounded-xl p-3 text-xs border"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="officerModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-slate-900 text-white px-4 py-3.5 flex justify-between items-center"><h3 class="font-black text-sm uppercase tracking-wide" id="modalHeaderTitle">Officer Authorization</h3><button onclick="closeOfficerModal()" class="text-white">✕</button></div>
+            <div class="p-4 space-y-4">
+                <div id="loginFormFrame" class="space-y-3.5">
+                    <select id="officerPlant" class="w-full text-xs border p-2.5 bg-gray-50 rounded-lg"><option value="TSL-Kalinganagar">TSL - Kalinganagar</option><option value="TSL-Jamshedpur">TSL - Jamshedpur</option></select>
+                    <input type="text" id="officerUser" placeholder="User ID (safe101)" class="w-full text-xs border rounded-lg p-2.5 font-bold"/>
+                    <input type="password" id="officerPass" placeholder="••••••••" class="w-full text-xs border rounded-lg p-2.5 font-bold"/>
+                    <button onclick="validateOfficerLogin()" class="w-full bg-slate-900 text-white text-xs font-bold py-2.5 rounded-lg">Verify & Unlock Terminal</button>
+                </div>
+                <div id="searchInterfaceFrame" class="hidden space-y-4">
+                    <div class="bg-emerald-50 p-2 flex justify-between items-center rounded-lg"><span class="text-[10px] text-emerald-800 font-bold">🟢 Stationed: <span id="activeStationBadge">None</span></span><button onclick="logoutOfficer()" class="text-[9px] bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">Logout</button></div>
+                    <div class="flex gap-2"><input type="text" id="searchEmpId" placeholder="E.g., TSL-EMP-101" class="w-full text-xs border rounded-lg p-2.5 font-bold uppercase"/><button onclick="executeLiveSearch()" class="bg-emerald-600 text-white text-xs font-bold px-4 rounded-lg">Search</button></div>
+                    <div id="liveResultBox" class="hidden rounded-xl p-3 text-xs border"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportingModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-slate-900 text-white px-4 py-3.5 flex justify-between items-center"><h3 id="modalFormTitle" class="font-black text-sm uppercase">New Safety Report</h3><button onclick="closeReportingForm()" class="text-white">✕</button></div>
+            <form onsubmit="handleFormSubmit(event)" class="p-4 space-y-3.5">
+                <select id="reportPlant" class="w-full text-xs border p-2 bg-gray-50 rounded-lg"><option value="TSL-Kalinganagar">TSL - Kalinganagar</option><option value="TSL-Jamshedpur">TSL - Jamshedpur</option></select>
+                <input type="text" id="reportTitle" required placeholder="Subject..." class="w-full text-xs border rounded-lg p-2 font-medium"/>
+                <textarea id="reportDesc" required rows="3" placeholder="Provide full details..." class="w-full text-xs border rounded-lg p-2 font-medium"></textarea>
+                <button type="submit" class="w-full bg-emerald-600 text-white font-bold text-xs py-2.5 rounded-xl">Submit Vault</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="accidentSelectModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-5 space-y-4 text-center">
+            <h3 class="text-sm font-black uppercase tracking-wide">Select Accident Category</h3>
+            <div class="flex flex-col gap-2">
+                <button onclick="selectAccidentType('Reporting Accident')" class="p-3 bg-rose-50 border border-rose-200 text-xs font-bold text-rose-700 text-left rounded-xl">⚠️ Reporting Accident</button>
+                <button onclick="selectAccidentType('Property Damage')" class="p-3 bg-amber-50 border border-amber-200 text-xs font-bold text-amber-700 text-left rounded-xl">🏗️ Property Damage</button>
+                <button onclick="selectAccidentType('Red Risk')" class="p-3 bg-red-900 border text-xs font-bold text-white text-left rounded-xl animate-pulse">🔥 Red Risk Incident</button>
+            </div>
+            <button onclick="closeAccidentSelectModal()" class="w-full bg-slate-100 font-bold py-2 rounded-xl text-xs">Back</button>
+        </div>
+    </div>
+
+    <!-- TRANSLATION & LOGIC SCRIPT -->
+    <script>
+        const supabaseUrl = 'https://duyvrtunxqaawgytkxhv.supabase.co';
+        const supabaseKey = 'sb_publishable_Zlek_bcKAv11vgZMvohs9Q_r0huogOg';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        lucide.createIcons();
+
+        function openEmergencyModal() {
+            const confirmCall = confirm("🚨 SAFEX EMERGENCY HELPLINE\n\nNumber: +91 9177785011\n\nDo you want to dial this emergency line right now?");
+            if (confirmCall) window.location.href = "tel:+919177785011";
+        }
+
+        // 🌐 LANGUAGE TRANSLATION PARSER (WITH THE VAULT EXPANSION INTERCEPTORS)
+        let currentLang = 'EN';
+        function toggleLanguage() {
+            if(currentLang === 'EN') {
+                document.getElementById('companyName').innerText = "एबीसी कंपनी";
+                document.getElementById('btnPublicSearch').innerHTML = '<i data-lucide="search" class="w-3.5 h-3.5"></i> कर्मचारी प्रोफ़ाइल खोजें';
+                document.getElementById('btnOfficerSearch').innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i> सुरक्षा अधिकारी';
+                document.getElementById('incidentDaysTitle').innerText = "दुर्घटना मुक्त दिन";
+                document.getElementById('daysLabel').innerText = "दिन";
+                document.getElementById('safetyQuote').innerText = `"सुरक्षा से समझौता, दुर्घटना को न्योता। हमेशा पीपीई पहनें!"`;
+                document.getElementById('emergencyTitle').innerText = "आपातकालीन नंबर";
+                document.getElementById('emergencySub').innerText = "कॉल करने के लिए क्लिक करें";
+                document.getElementById('tslRulesTitle').innerText = "जीवन रक्षक नियम";
+                document.getElementById('tslRulesSub').innerText = "10 पूर्ण अधिदेश";
+                document.getElementById('sectionReporting').innerText = "सुरक्षा एवं शिकायतें दर्ज करें";
+                document.getElementById('lblNearMiss').innerText = "नियर मिस";
+                document.getElementById('lblHazard').innerText = "खतरा (Hazard)";
+                document.getElementById('lblUcua').innerText = "असुरक्षित स्थिति/कार्य";
+                document.getElementById('lblObservation').innerText = "सुरक्षा अवलोकन";
+                document.getElementById('lblAccident').innerText = "दुर्घटना (Accident)";
+                document.getElementById('lblFeedback').innerText = "प्रतिक्रिया (Feedback)";
+                document.getElementById('lblGrievances').innerText = "शिकायतें";
+                document.getElementById('lblSuggestion').innerText = "सुझाव (Suggestion)";
+                document.getElementById('sectionHub').innerText = "पोर्टल्स और हब";
+                document.getElementById('btnViewReports').innerText = "दर्ज रिपोर्ट देखें";
+                document.getElementById('subViewReports').innerText = "ओपन/क्लोज्ड स्थिति ट्रैक करें";
+                document.getElementById('lblDashboard').innerText = "सुरक्षा डैशबोर्ड देखें";
+                document.getElementById('subDashboard').innerText = "लाइव मीट्रिक चार्ट और विश्लेषण";
+                document.getElementById('lblTraining').innerText = "प्रशिक्षण प्रबंधन";
+                document.getElementById('subTraining').innerText = "मॉड्यूल, वीडियो और प्रगति";
+                document.getElementById('lblAlerts').innerText = "सुरक्षा अलर्ट";
+                document.getElementById('subAlerts').innerText = "हाल ही के प्लांट-वाइड प्रसारण";
+                document.getElementById('eventsTitle').innerText = "आगामी सुरक्षा कार्यक्रम";
+                document.getElementById('eventMockDrillTitle').innerText = "सीमित स्थान मॉक ड्रिल";
+                document.getElementById('eventMockDrillSub').innerText = "समय: सुबह 10:30 • साइट-4 ब्लास्ट फर्नेस क्षेत्र";
+                document.getElementById('noticesTitle').innerText = "परिपत्र और नोटिस";
+                document.getElementById('liveBoardBadge').innerText = "लाइव बोर्ड";
+                document.getElementById('badgeHoliday').innerText = "छुट्टी";
+                document.getElementById('timeToday').innerText = "आज";
+                document.getElementById('noticeHolidayTitle').innerText = "स्वतंत्रता दिवस अवकाश सूचना";
+                document.getElementById('noticeHolidaySub').innerText = "अनुबंध के आदेशानुसार शिफ्ट सी बंद रहेगी...";
+                
+                // Vault Translations
+                document.getElementById('libraryTitle').innerText = "दस्तावेज़ तिजोरी / लाइब्रेरी";
+                document.getElementById('vaultSop').innerHTML = '<i data-lucide="file-text" class="w-4 h-4 text-red-500 shrink-0"></i> एसओपी मानक';
+                document.getElementById('vaultJha').innerHTML = '<i data-lucide="shield-alert" class="w-4 h-4 text-blue-500 shrink-0"></i> जेएचए फ़ोल्डर्स';
+                document.getElementById('vaultHira').innerHTML = '<i data-lucide="activity" class="w-4 h-4 text-amber-500 shrink-0"></i> हीरा नियमावली';
+                document.getElementById('vaultMsds').innerHTML = '<i data-lucide="droplet" class="w-4 h-4 text-purple-500 shrink-0"></i> एमएसडीएस शीट्स';
+                document.getElementById('vaultTpi').innerHTML = '<i data-lucide="check-square" class="w-4 h-4 text-emerald-500 shrink-0"></i> टीपीआई दस्तावेज़';
+                document.getElementById('vaultPolicies').innerHTML = '<i data-lucide="book-open" class="w-4 h-4 text-indigo-500 shrink-0"></i> सभी नीतियां';
+                document.getElementById('vaultProcedures').innerHTML = '<i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-400 shrink-0"></i> सुरक्षा प्रक्रियाएं';
+
+                document.getElementById('fameTitle').innerText = "प्रशंसा की दीवार";
+                document.getElementById('fameSub').innerText = "फैब्रिकेशन team — जमशेदपुर";
+                document.getElementById('footerAddr').innerText = "टाटा स्टील जेएसआर, जमशेदपुर, झारखंड, भारत";
+                document.getElementById('langBtn').innerText = "English";
+                currentLang = 'HI';
+            } else {
+                document.getElementById('companyName').innerText = "ABC COMPANY";
+                document.getElementById('btnPublicSearch').innerHTML = '<i data-lucide="search" class="w-3.5 h-3.5"></i> Search Employee Profile';
+                document.getElementById('btnOfficerSearch').innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i> Safety Officer';
+                document.getElementById('incidentDaysTitle').innerText = "Incident Free Days";
+                document.getElementById('daysLabel').innerText = "Days";
+                document.getElementById('safetyQuote').innerText = `"सुरक्षा से समझौता, दुर्घटना को न्योता। Always wear your PPE!"`;
+                document.getElementById('emergencyTitle').innerText = "EMERGENCY NO";
+                document.getElementById('emergencySub').innerText = "Click to Dial";
+                document.getElementById('tslRulesTitle').innerText = "LIFE SAVING RULES";
+                document.getElementById('tslRulesSub').innerText = "10 Absolute Mandates";
+                document.getElementById('sectionReporting').innerText = "Log Safety & Grievances";
+                document.getElementById('lblNearMiss').innerText = "Near Miss";
+                document.getElementById('lblHazard').innerText = "Hazard";
+                document.getElementById('lblUcua').innerText = "UC / UA";
+                document.getElementById('lblObservation').innerText = "Observation";
+                document.getElementById('lblAccident').innerText = "Accident";
+                document.getElementById('lblFeedback').innerText = "Feedback";
+                document.getElementById('lblGrievances').innerText = "Grievances";
+                document.getElementById('lblSuggestion').innerText = "Suggestion";
+                document.getElementById('sectionHub').innerText = "Portals & Hubs";
+                document.getElementById('btnViewReports').innerText = "View Logged Reports";
+                document.getElementById('subViewReports').innerText = "Track Open/Closed Statuses";
+                document.getElementById('lblDashboard').innerText = "View Safety Dashboard";
+                document.getElementById('subDashboard').innerText = "Live Metric Charts & Analysis";
+                document.getElementById('lblTraining').innerText = "Training Management";
+                document.getElementById('subTraining').innerText = "Modules, Videos & Progress";
+                document.getElementById('lblAlerts').innerText = "Safety Alerts";
+                document.getElementById('subAlerts').innerText = "Recent Plant-Wide Broadcasts";
+                document.getElementById('eventsTitle').innerText = "Upcoming Safety Events";
+                document.getElementById('eventMockDrillTitle').innerText = "Confined Space Mock Drill";
+                document.getElementById('eventMockDrillSub').innerText = "Time: 10:30 AM • Site-4 Blast Furnace Area";
+                document.getElementById('noticesTitle').innerText = "Circulars & Notices";
+                document.getElementById('liveBoardBadge').innerText = "LIVE BOARD";
+                document.getElementById('badgeHoliday').innerText = "Holiday";
+                document.getElementById('timeToday').innerText = "Today";
+                document.getElementById('noticeHolidayTitle').innerText = "Independence Day Holiday Notice";
+                document.getElementById('noticeHolidaySub').innerText = "Shift C operations will remain closed...";
+                
+                // Reset Vault
+                document.getElementById('libraryTitle').innerText = "Document Vault / Library";
+                document.getElementById('vaultSop').innerHTML = '<i data-lucide="file-text" class="w-4 h-4 text-red-500 shrink-0"></i> SOP Standard';
+                document.getElementById('vaultJha').innerHTML = '<i data-lucide="shield-alert" class="w-4 h-4 text-blue-500 shrink-0"></i> JHA Folders';
+                document.getElementById('vaultHira').innerHTML = '<i data-lucide="activity" class="w-4 h-4 text-amber-500 shrink-0"></i> HIRA Manuals';
+                document.getElementById('vaultMsds').innerHTML = '<i data-lucide="droplet" class="w-4 h-4 text-purple-500 shrink-0"></i> MSDS Sheets';
+                document.getElementById('vaultTpi').innerHTML = '<i data-lucide="check-square" class="w-4 h-4 text-emerald-500 shrink-0"></i> TPI Document';
+                document.getElementById('vaultPolicies').innerHTML = '<i data-lucide="book-open" class="w-4 h-4 text-indigo-500 shrink-0"></i> All Policies';
+                document.getElementById('vaultProcedures').innerHTML = '<i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-400 shrink-0"></i> Safety Procedures';
+
+                document.getElementById('fameTitle').innerText = "WALL OF FAME";
+                document.getElementById('fameSub').innerText = "Fabrication Team — Jamshedpur";
+                document.getElementById('footerAddr').innerText = "Tata Steel JSR, Jamshedpur, Jharkhand, India";
+                document.getElementById('langBtn').innerText = "A/अ";
+                currentLang = 'EN';
+            }
+            lucide.createIcons();
+        }
+
+        function toggleReportsLog() {
+            const section = document.getElementById('reportsLogSection');
+            const arrow = document.getElementById('arrowIcon');
+            if(section.classList.contains('hidden')) { section.classList.remove('hidden'); arrow.classList.add('rotate-180'); }
+            else { section.classList.add('hidden'); arrow.classList.remove('rotate-180'); }
+        }
+        function openPublicSearchModal() { document.getElementById('publicSearchModal').classList.remove('hidden'); document.getElementById('publicResultBox').classList.add('hidden'); }
+        function closePublicSearchModal() { document.getElementById('publicSearchModal').classList.add('hidden'); }
+        async function executePublicLiveSearch() {
+            const selectedPlant = document.getElementById('publicSearchPlant').value;
+            const searchId = document.getElementById('publicSearchEmpId').value.trim().toUpperCase();
+            const resultBox = document.getElementById('publicResultBox');
+            if(!searchId) return;
+            resultBox.classList.remove('hidden');
+            try {
+                const { data } = await _supabase.from('employee_profiles').select('*').eq('employee_id', searchId);
+                if(data && data[0] && data[0].active_plant_id === selectedPlant) {
+                    resultBox.className = "rounded-xl p-3 bg-emerald-50 text-slate-700 text-left space-y-1.5";
+                    resultBox.innerHTML = `✅ <strong>${data[0].full_name}</strong><br>Blood: ${data[0].blood_group}<br>Status: ${data[0].medical_fitness_status}`;
+                } else {
+                    resultBox.className = "rounded-xl p-3 bg-rose-100 text-rose-700";
+                    resultBox.innerHTML = `🛑 Verification Boundary Error.`;
+                }
+            } catch(e) { resultBox.innerHTML = e.message; }
+        }
+        const officerAccounts = { 'safe101': 'tata123', 'admin': 'pass123' };
+        let currentAuthenticatedPlant = "";
+        function openOfficerModal() { document.getElementById('officerModal').classList.remove('hidden'); if(!currentAuthenticatedPlant) logoutOfficer(); }
+        function closeOfficerModal() { document.getElementById('officerModal').classList.add('hidden'); }
+        function validateOfficerLogin() {
+            const plant = document.getElementById('officerPlant').value;
+            const user = document.getElementById('officerUser').value.trim();
+            const pass = document.getElementById('officerPass').value;
+            if(officerAccounts[user] && officerAccounts[user] == pass) {
+                currentAuthenticatedPlant = plant;
+                document.getElementById('loginFormFrame').classList.add('hidden');
+                document.getElementById('searchInterfaceFrame').classList.remove('hidden');
+                document.getElementById('activeStationBadge').innerText = plant;
+            } else { alert("Invalid Credentials!"); }
+        }
+        function logoutOfficer() { currentAuthenticatedPlant = ""; document.getElementById('loginFormFrame').classList.remove('hidden'); document.getElementById('searchInterfaceFrame').classList.add('hidden'); }
+        async function executeLiveSearch() { /* Reserved officer controller script */ }
+        function openAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.remove('hidden'); }
+        function closeAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.add('hidden'); }
+        function selectAccidentType(type) { closeAccidentSelectModal(); openReportingForm(type); }
+        let activeReportType = "";
+        function openReportingForm(type) { activeReportType = type; document.getElementById('modalFormTitle').innerText = "Log " + type; document.getElementById('reportingModal').classList.remove('hidden'); }
+        function closeReportingForm() { document.getElementById('reportingModal').classList.add('hidden'); }
+        function handleFormSubmit(e) { e.preventDefault(); alert("Saved to Vault."); closeReportingForm(); }
+        function openTslRules() { alert("TSL Life Saving Mandates Loaded"); }
+    </script>
+</body>
+</html>

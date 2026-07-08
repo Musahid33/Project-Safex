@@ -1,0 +1,17 @@
+" class="w-3 h-3"></i> Forgot Password?
+                        </button>
+                    </div>
+
+                    <!-- 5. SUBMIT GATEWAY ACCESS BUTTON -->
+                    <button onclick="validateOfficerLogin()" class="w-full mt-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-slate-950 text-xs font-black py-3 rounded-xl transition shadow-lg active:scale-[0.99] flex items-center justify-center gap-1.5">
+                        <i data-lucide="lock-open" class="w-4 h-4"></i> Establish Secure Session
+                    </button>
+
+                    <!-- 6. CLOSE / BACK BUTTON -->
+                    <button onclick="closeOfficerModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold py-2.5 rounded-xl transition border border-slate-700 flex items-center justify-center gap-1.5">
+                        <i data-lucide="x-circle" class="w-4 h-4"></i> Close / Back
+                    </button>
+                </div>
+                <div id="searchInterfaceFrame" class="hidden space-y-4">
+                    <div class="bg-emerald-50 p-2 flex justify-between items-center rounded-lg"><span class="text-[10px] text-emerald-800 font-bold">🟢 Stationed: <span id="activeStationBadge">None</span></span><button onclick="logoutOfficer()" class="text-[9px] bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">Logout</button></div>
+                    <div class="flex gap-2"><input type="text" id="searchEmpId" placeholder="E.g., TSL-EMP-101" class="w-full text-xs border rounded-lg p-2.5 font-bold uppercase"/><button onclick="executeLiveSearch()" class="bg-emerald-600 text-white text-

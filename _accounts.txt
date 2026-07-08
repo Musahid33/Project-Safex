@@ -1,0 +1,14 @@
+Line: 2122
+2120:             const user = document.getElementById('officerUser').value.trim();
+2121:             const pass = document.getElementById('officerPass').value;
+2122:             if(officerAccounts[user] && officerAccounts[user] == pass) {
+2123:                 currentAuthenticatedPlant = plant;
+2124:                 document.getElementById('loginFormFrame').classList.add('hidden');
+2125:                 document.getElementById('searchInterfaceFrame').classList.remove('hidden');
+2126:                 document.getElementById('activeStationBadge').innerText = plant;
+2127:             } else { alert("Invalid Credentials!"); }
+2128:         }
+2129:         function logoutOfficer() { currentAuthenticatedPlant = ""; document.getElementById('loginFormFrame').classList.remove('hidden'); document.getElementById('searchInterfaceFrame').classList.add('hidden'); }
+2130:         async function executeLiveSearch() { /* Officer query script */ }
+2131:         function openAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.remove('hidden'); }
+2132:         function closeAccidentSelectModal() { document.getElementById('accidentSelectModal').classList.add('hidden'); }
