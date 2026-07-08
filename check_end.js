@@ -1,0 +1,10 @@
+const fs = require('fs');
+const content = fs.readFileSync('index.html', 'utf8');
+console.log('Last 200 chars:');
+console.log(content.slice(-200));
+console.log('\n---');
+console.log('Has </body>:', content.includes('</body>'));
+console.log('Has </html>:', content.includes('</html>'));
+console.log('Last </script> at index:', content.lastIndexOf('</script>'));
+console.log('Content after last </script>:');
+console.log(content.slice(content.lastIndexOf('</script>') + 9));
